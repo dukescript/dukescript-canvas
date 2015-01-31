@@ -20,12 +20,12 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package com.dukescript.html.canvas.impl;
+package com.dukescript.impl.canvas;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import com.dukescript.html.canvas.GraphicsContext2D;
-import com.dukescript.html.canvas.spi.GraphicsEnvironment;
+import com.dukescript.api.canvas.GraphicsContext2D;
+import com.dukescript.spi.canvas.GraphicsEnvironment;
 
 /**
  *

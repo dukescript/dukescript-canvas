@@ -22,8 +22,10 @@
  */
 package com.dukescript.canvas.html;
 
-import com.dukescript.html.canvas.GraphicsContext2D;
-import com.dukescript.html.canvas.spi.GraphicsUtils;
+import com.dukescript.api.canvas.GraphicsContext2D;
+import com.dukescript.spi.canvas.GraphicsUtils;
+
+
 
 /**
  *

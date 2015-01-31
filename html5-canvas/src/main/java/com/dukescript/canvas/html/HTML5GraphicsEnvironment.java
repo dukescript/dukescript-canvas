@@ -24,15 +24,16 @@ package com.dukescript.canvas.html;
 
 import java.util.Map;
 import java.util.Set;
-import com.dukescript.html.canvas.Dimension;
-import com.dukescript.html.canvas.Image;
-import com.dukescript.html.canvas.ImageData;
-import com.dukescript.html.canvas.Style;
-import com.dukescript.html.canvas.Style.Color;
-import com.dukescript.html.canvas.Style.LinearGradient;
-import com.dukescript.html.canvas.Style.Pattern;
-import com.dukescript.html.canvas.Style.RadialGradient;
-import com.dukescript.html.canvas.spi.GraphicsEnvironment;
+import com.dukescript.api.canvas.Dimension;
+import com.dukescript.api.canvas.Image;
+import com.dukescript.api.canvas.ImageData;
+import com.dukescript.api.canvas.Style;
+import com.dukescript.api.canvas.Style.Color;
+import com.dukescript.api.canvas.Style.LinearGradient;
+import com.dukescript.api.canvas.Style.Pattern;
+import com.dukescript.api.canvas.Style.RadialGradient;
+import com.dukescript.spi.canvas.GraphicsEnvironment;
+import java.util.List;
 
 import net.java.html.js.JavaScriptBody;
 import org.openide.util.lookup.ServiceProvider;
@@ -41,9 +42,8 @@ import org.openide.util.lookup.ServiceProvider;
  *
  * @author Anton Epple toni.epple@eppleton.de
  */
-
 @ServiceProvider(service = GraphicsEnvironment.class)
- public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
+public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
 
     @Override
     public Object getOrCreateCanvas(String id) {
@@ -61,7 +61,7 @@ import org.openide.util.lookup.ServiceProvider;
             + "var body = document.getElementsByTagName('body')[0];body.appendChild(canvas); return canvas;")
     private static native Object createImpl(String id);
 
-    @JavaScriptBody(args = { "canvas", "centerX", "centerY", "startAngle", "radius", "endAngle", "ccw" },
+    @JavaScriptBody(args = {"canvas", "centerX", "centerY", "startAngle", "radius", "endAngle", "ccw"},
             body = "var context = canvas.getContext('2d');context.beginPath();context.arc(centerx,centery, radius, startangle, endangle,ccw);context.fill();")
     @Override
     public native void arc(Object canvas,
@@ -81,8 +81,6 @@ import org.openide.util.lookup.ServiceProvider;
             double x2,
             double y2,
             double r);
-    
-    
 
     @JavaScriptBody(args = {"canvas", "x", "y"},
             body = "return canvas.getContext('2d').isPointInPath(x,y);")
@@ -194,80 +192,54 @@ import org.openide.util.lookup.ServiceProvider;
         return drawImageImpl(canvas, nativeImage, sx, sy, sWidth, sHeight, x, y, width, height);
     }
 
-    @JavaScriptBody(args = {"ctx", "img", "x", "y", "width", "height"}, body = 
-        "img.onload=function(){\n"
-      + "  ctx.getContext('2d').drawImage(img,x,y,width,height);\n"
-      + "};\n"
-      + "ctx.getContext('2d').drawImage(img,x,y,width,height);\n"
-      + "return img;"
+    @JavaScriptBody(args = {"ctx", "img", "x", "y", "width", "height"}, body
+            = "img.onload=function(){\n"
+            + "  ctx.getContext('2d').drawImage(img,x,y,width,height);\n"
+            + "};\n"
+            + "ctx.getContext('2d').drawImage(img,x,y,width,height);\n"
+            + "return img;"
     )
     private native static Object drawImageImpl(Object ctx, Object img, double x, double y, double width, double height);
 
     @JavaScriptBody(args = {
         "ctx", "img", "sx", "sy", "swidth", "sheight", "x", "y", "width", "height"
-    }, body = 
-        "img.onload=function(){\n"
-      + "  ctx.getContext('2d').drawImage(img,sx,sy,swidth,sheight,x,y,width,height);"
-      + "};\n"
-      + "ctx.getContext('2d').drawImage(img,sx,sy,swidth,sheight,x,y,width,height);\n"
-      + "return img;"
+    }, body
+            = "img.onload=function(){\n"
+            + "  ctx.getContext('2d').drawImage(img,sx,sy,swidth,sheight,x,y,width,height);"
+            + "};\n"
+            + "ctx.getContext('2d').drawImage(img,sx,sy,swidth,sheight,x,y,width,height);\n"
+            + "return img;"
     )
     private native static Object drawImageImpl(Object ctx, Object img, double sx, double sy, double sWidth, double sHeight, double x, double y, double width, double height);
 
-    @JavaScriptBody(args = {"ctx", "img", "x", "y"}, body = 
-        "img.onload=function(){\n"
-      + "  ctx.getContext('2d').drawImage(img,x,y);\n"
-      + "};\n"
-      + "ctx.getContext('2d').drawImage(img,x,y);\n"
-      + "return img;"
+    @JavaScriptBody(args = {"ctx", "img", "x", "y"}, body
+            = "img.onload=function(){\n"
+            + "  ctx.getContext('2d').drawImage(img,x,y);\n"
+            + "};\n"
+            + "ctx.getContext('2d').drawImage(img,x,y);\n"
+            + "return img;"
     )
     private native static Object drawImageImpl(Object ctx, Object img, double x, double y);
 
     @Override
     public Object setFillStyle(Object canvas, Style style, Object nativeStyle) {
         if (nativeStyle == null) {
-            nativeStyle = createNativeStyle(canvas, style);
+            nativeStyle = this.createNativeStyle(canvas, style);
         }
         setFillStyleImpl(canvas, nativeStyle);
         return nativeStyle;
     }
 
-    private Object createNativeStyle(Object canvas, Style style) {
-        if (style instanceof RadialGradient) {
-            RadialGradientWrapper gradient = createRadialGradientWrapper(canvas,
-                    ((RadialGradient) style).getX0(),
-                    ((RadialGradient) style).getY0(),
-                    ((RadialGradient) style).getR0(),
-                    ((RadialGradient) style).getX1(),
-                    ((RadialGradient) style).getY1(),
-                    ((RadialGradient) style).getR1());
-            Map<Double, String> stops = ((LinearGradient) style).getStops();
-            Set<Double> keySet = stops.keySet();
-            for (Double double1 : keySet) {
-                addColorStopImpl(style, double1, stops.get(double1));
-            }
-            return gradient;
+    protected Object createNativeStyle(Object canvas, Style style) {
 
-        } else if (style instanceof LinearGradient) {
-            LinearGradientWrapper gradient = createLinearGradientWrapper(
-                    canvas,
-                    ((LinearGradient) style).getX0(),
-                    ((LinearGradient) style).getY0(),
-                    ((LinearGradient) style).getX1(),
-                    ((LinearGradient) style).getY1());
-            Map<Double, String> stops = ((LinearGradient) style).getStops();
-            Set<Double> keySet = stops.keySet();
-            for (Double double1 : keySet) {
-                addColorStopImpl(style, double1, stops.get(double1));
-            }
-            return gradient;
-        } else if (style instanceof Pattern) {
-            return createPatternWrapper(canvas,((Pattern) style).getImageResource(), ((Pattern) style).getRepeat());
+        if (style instanceof Pattern) {
+            return createPatternWrapper(canvas, ((Pattern) style).getImageResource(), ((Pattern) style).getRepeat());
         } else if (style instanceof Color) {
             return ((Color) style)
                     .getAsString();
+        } else {
+            return this.createGradient(canvas, style);
         }
-        return null;
     }
 
     @JavaScriptBody(args = {"gradient", "position", "color"}, body
@@ -283,7 +255,7 @@ import org.openide.util.lookup.ServiceProvider;
     @Override
     public Object setStrokeStyle(Object canvas, Style style, Object nativeStyle) {
         if (nativeStyle == null) {
-            nativeStyle = createNativeStyle(canvas, style);
+            nativeStyle = this.createNativeStyle(canvas, style);
         }
         setStrokeStyleImpl(canvas, nativeStyle);
         return nativeStyle;
@@ -448,7 +420,6 @@ import org.openide.util.lookup.ServiceProvider;
 //    public void putPixelMap(Object canvas, ImageData imageData, double x, double y, double dirtyx, double dirtyy, double dirtywidth, double dirtyheight) {
 //        putPixelMapImpl(canvas, ((ImageDataWrapper) imageData).object(), x, y, dirtyx, dirtyy, dirtywidth, dirtyheight);
 //    }
-
     @JavaScriptBody(args = {"canvas", "imageData", "x", "y", "dirtyx", "dirtyy", "dirtywidth", "dirtyheight"},
             body = "canvas.getContext('2d').putImageData(imageData,x,y, dirtyx, dirtyy, dirtywidth,dirtyheight);")
     private native void putPixelMapImpl(Object canvas, Object imageData, double x, double y, double dirtyx, double dirtyy, double dirtywidth, double dirtyheight);
@@ -529,7 +500,7 @@ import org.openide.util.lookup.ServiceProvider;
         return getWidth(canvas, nativeImage);
     }
 
-    @JavaScriptBody(args = {"canvas","nativeImage"}, body = "return nativeImage.naturalWidth;")
+    @JavaScriptBody(args = {"canvas", "nativeImage"}, body = "return nativeImage.naturalWidth;")
     private static native int getWidth(Object canvas, Object nativeImage);
 
     @Override
@@ -540,8 +511,8 @@ import org.openide.util.lookup.ServiceProvider;
         return getHeight(canvas, nativeImage);
     }
 
-    @JavaScriptBody(args = {"canvas","nativeImage"}, body = "return nativeImage.naturalHeight;")
-    private static native int getHeight(Object canvas,Object nativeImage);
+    @JavaScriptBody(args = {"canvas", "nativeImage"}, body = "return nativeImage.naturalHeight;")
+    private static native int getHeight(Object canvas, Object nativeImage);
 
     @Override
     public Object mergeImages(Object Canvas, Image a, Image b, Object cachedA, Object cachedB) {
@@ -575,5 +546,38 @@ import org.openide.util.lookup.ServiceProvider;
 
     @JavaScriptBody(args = {"canvas", "height"}, body = "canvas.height = height;")
     private native void setHeightImpl(Object canvas, int width);
+
+    private Object createGradient(Object canvas, Style style) {
+        if (style instanceof RadialGradient) {
+            RadialGradientWrapper gradient = createRadialGradientWrapper(canvas,
+                    ((RadialGradient) style).getX0(),
+                    ((RadialGradient) style).getY0(),
+                    ((RadialGradient) style).getR0(),
+                    ((RadialGradient) style).getX1(),
+                    ((RadialGradient) style).getY1(),
+                    ((RadialGradient) style).getR1());
+            List<Style.Stop> stops = ((LinearGradient) style).getStops();
+            
+            for (Style.Stop stop : stops) {
+                addColorStopImpl(style, stop.getPos(), stop.getStyle());
+                
+            }
+            
+            return gradient;
+        } else if (style instanceof LinearGradient) {
+            LinearGradientWrapper gradient = createLinearGradientWrapper(
+                    canvas,
+                    ((LinearGradient) style).getX0(),
+                    ((LinearGradient) style).getY0(),
+                    ((LinearGradient) style).getX1(),
+                    ((LinearGradient) style).getY1());
+            List<Style.Stop> stops = ((LinearGradient) style).getStops();
+            for (Style.Stop stop : stops) {
+                addColorStopImpl(style, stop.getPos(), stop.getStyle());
+            }
+            return gradient;
+        }
+        return null;
+    }
 
 }

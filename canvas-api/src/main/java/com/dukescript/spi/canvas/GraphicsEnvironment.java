@@ -20,20 +20,20 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package com.dukescript.html.canvas.spi;
+package com.dukescript.spi.canvas;
 
-import com.dukescript.html.canvas.Dimension;
-import com.dukescript.html.canvas.GraphicsContext2D;
-import com.dukescript.html.canvas.Image;
-import com.dukescript.html.canvas.ImageData;
-import com.dukescript.html.canvas.Style;
+import com.dukescript.api.canvas.Dimension;
+import com.dukescript.api.canvas.GraphicsContext2D;
+import com.dukescript.api.canvas.Image;
+import com.dukescript.api.canvas.ImageData;
+import com.dukescript.api.canvas.Style;
 
 /**
  * Provider API for Canvas. Implement this to add support for your platform.
  * The Provider is supposed to create/find a Canvas identified by an ID and 
  * enable drawing operations. 
  * 
- * Users don't use the GraphicsEnvironment directly. They interact with {@link com.dukescript.html.canvas.GraphicsContext2D GraphicsContext2D}
+ * Users don't use the GraphicsEnvironment directly. They interact with {@link com.dukescript.api.canvas.GraphicsContext2D GraphicsContext2D}
  * @see GraphicsContext2D
  * 
  * @author antonepple

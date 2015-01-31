@@ -20,44 +20,32 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package com.dukescript.html.canvas;
+package com.dukescript.spi.canvas;
+
+import com.dukescript.api.canvas.GraphicsContext2D;
+import com.dukescript.impl.canvas.CnvsAccssr;
 
 /**
- * Just a simple class to replace the need of java.awt.Dimension, since we only
- * want to use Java core APIs to keep porting simple. You shouldn't need to
- * ever create one, unless you write an implementation of your own Graphicsenvironment.
  *
  * @author antonepple
  */
-public final class Dimension {
+public class GraphicsUtils {
 
-    final double width, height;
-
-    /**
-     * Constructor 
-     * @param width the width
-     * @param height the height
-     */
-    public Dimension(double width, double height) {
-        this.width = width;
-        this.height = height;
+    private GraphicsUtils() {
     }
 
     /**
-     * Returns the height of this Dimension in double precision
-     *
-     * @return the width of this Dimension.
+     * Use this to get A GraphicsContext2D to draw on. Pass in a  
+     * {@link com.dukescript.spi.canvas.GraphicsEnvironment} and a String to identify
+     * your Canvas. 
+     * In the HTML5 implementation, the {@link com.dukescript.spi.canvas.GraphicsEnvironment} 
+     * will look for a Canvas with that ID in your HTML (or add a new one to the page).
+     * @param env the GraphicsEnvironment
+     * @param id used by the {@link GraphicsEnvironment to identify the Canvas}
+     * @return A GraphicsContext2D
      */
-    public double getWidth() {
-        return width;
+    public static GraphicsContext2D getOrCreate(GraphicsEnvironment env, String id) {       
+        return CnvsAccssr.getDefault().create(env, env.getOrCreateCanvas(id));
     }
 
-    /**
-     * Returns the width of this Dimension in double precision.
-     *
-     * @return the height of this Dimension.
-     */
-    public double getHeight() {
-        return height;
-    }
 }

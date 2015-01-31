@@ -4,16 +4,16 @@
     <parent>
         <artifactId>canvas</artifactId>
         <groupId>com.dukescript.canvas</groupId>
-        <version>0.7</version>
+        <version>0.7.1-SNAPSHOT</version>
     </parent>
     <artifactId>canvas-api</artifactId>
-    <version>0.7</version>
+    <version>0.7.1-SNAPSHOT</version>
     <packaging>bundle</packaging>
     <name>canvas-api</name>
     <url>http://maven.apache.org</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <publicPackages>com.dukescript.html.canvas, com.dukescript.html.canvas.spi</publicPackages>
+        <publicPackages>com.dukescript.api.canvas, com.dukescript.spi.canvas</publicPackages>
     </properties>
     <build>
         <plugins>

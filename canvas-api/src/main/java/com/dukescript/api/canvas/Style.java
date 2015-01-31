@@ -20,10 +20,10 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package com.dukescript.html.canvas;
+package com.dukescript.api.canvas;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -124,7 +124,7 @@ public class Style {
 
     private static class Gradient extends Style {
 
-        protected final Map<Double, String> stops;
+        protected final List<Stop> stops;
         protected final double x0, y0, x1, y1;
 
         /**
@@ -135,12 +135,12 @@ public class Style {
          * @param y1 the y coordinate of the end point for this gradient
          * @param stops  the stops of this gradient
          */
-        private Gradient(double x0, double y0, double x1, double y1,Map<Double, String> stops) {
+        private Gradient(double x0, double y0, double x1, double y1,List<Stop> stops) {
             this.x0 = x0;
             this.y0 = y0;
             this.x1 = x1;
             this.y1 = y1;
-            this.stops = new HashMap<Double,String>(stops);
+            this.stops = new ArrayList<Stop>(stops);
         }
 
         /**
@@ -200,8 +200,8 @@ public class Style {
          *
          * @return the stops of this gradient
          */
-        public Map<Double, String> getStops() {
-            return new HashMap<Double,String>(stops);
+        public List<Stop> getStops() {
+            return new ArrayList<Stop>(stops);
         }
 
         @Override
@@ -249,7 +249,7 @@ public class Style {
      */
     public static class LinearGradient extends Gradient {
 
-       private LinearGradient(double x0, double y0, double x1, double y1,Map<Double, String> stops) {
+       private LinearGradient(double x0, double y0, double x1, double y1,List<Stop> stops) {
             super(x0, y0, x1, y1, stops);
         }
 
@@ -262,7 +262,7 @@ public class Style {
          * @param stops  the stops of this gradient
          * @return linearGradient the gradient
          */
-        public static LinearGradient create(double x0, double y0, double x1, double y1,Map<Double, String> stops) {
+        public static LinearGradient create(double x0, double y0, double x1, double y1,List<Stop> stops) {
             return new LinearGradient(x0, y0, x1, y1, stops);
         }
 
@@ -278,7 +278,7 @@ public class Style {
         final private double r0, r1;
 
 
-        private RadialGradient(double x0, double y0, double r0, double x1, double y1, double r1, Map<Double, String> stops) {
+        private RadialGradient(double x0, double y0, double r0, double x1, double y1, double r1, List<Stop> stops) {
             super(x0, y0, x1, y1,stops);
             this.r0 = r0;
             this.r1 = r1;
@@ -296,7 +296,7 @@ public class Style {
          * @param stops  the stops of this gradient
          * @return radialGradient the gradient
          */
-        public static RadialGradient create(double x0, double y0, double r0, double x1, double y1, double r1, Map<Double, String> stops){
+        public static RadialGradient create(double x0, double y0, double r0, double x1, double y1, double r1, List<Stop> stops){
             return new RadialGradient(x0, y0, r0, x1, y1, r1, stops);
         }
         
@@ -367,6 +367,26 @@ public class Style {
             }
             return true;
         }
+    }
+
+    public static class Stop {
+        private final double pos;
+        private final String style;
+
+        public Stop(double pos, String style) {
+            this.pos = pos;
+            this.style = style;
+        }
+
+        public double getPos() {
+            return pos;
+        }
+
+        public String getStyle() {
+            return style;
+        }
+        
+        
     }
 
 }

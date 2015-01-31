@@ -20,7 +20,7 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package de.eppleton.canvas.html;
+package com.dukescript.canvas.html;
 
 //import org.apidesign.bck2brwsr.vmtest.VMTest;
 

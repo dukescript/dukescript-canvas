@@ -20,23 +20,43 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package com.dukescript.html.canvas;
+package com.dukescript.api.canvas;
 
 import java.util.Map;
-import com.dukescript.html.canvas.Style.Color;
-import com.dukescript.html.canvas.Style.LinearGradient;
-import com.dukescript.html.canvas.Style.Pattern;
-import com.dukescript.html.canvas.Style.RadialGradient;
-import com.dukescript.html.canvas.spi.GraphicsEnvironment;
+import com.dukescript.api.canvas.Style.Color;
+import com.dukescript.api.canvas.Style.LinearGradient;
+import com.dukescript.api.canvas.Style.Pattern;
+import com.dukescript.api.canvas.Style.RadialGradient;
+import com.dukescript.api.canvas.Style.Stop;
+import com.dukescript.spi.canvas.GraphicsEnvironment;
+import com.dukescript.impl.canvas.CnvsAccssr;
+import java.util.List;
 
-final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
+/**
+ * A 2D Graphics Context similar to HTML5 or JavaFX GraphicsContext. Use this to
+ * paint on your Canvas. To get a GraphicsContext2D call
+ * For HTML 5 :
+ * <pre>
+ * {@code
+ * GraphicsContext2D gc = HTML5Graphics.getOrCreate("canvas");
+ * }
+ * @author antonepple
+ */
+public abstract class GraphicsContext2D {
 
-    final GraphicsEnvironment<Canvas> graphicsEnvironmentImpl;
-    final Canvas canvas;
+    static {
+        CnvsAccssr cnvsAccssr = new CnvsAccssr() {
+            @Override
+            public <C> GraphicsContext2D create(GraphicsEnvironment<C> environment, C c) {
+                return new GraphicsContext2DImpl<C>(environment, c);
+            }
+        };
+    }
 
-    GraphicsContext2DImpl(GraphicsEnvironment<Canvas> graphicsEnvironment, Canvas c) {
-        this.graphicsEnvironmentImpl = graphicsEnvironment;
-        this.canvas = c;
+    /**
+     * only one subclass GraphicsContextImpl
+     */
+    GraphicsContext2D() {
     }
 
     /**
@@ -49,15 +69,12 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * @param endAngle the endAngle of the arc
      * @param ccw the direction of the arc (counterclockwise)
      */
-    @Override
-    public void arc(double centerX,
+    public abstract void arc(double centerX,
             double centerY,
             double startAngle,
             double radius,
             double endAngle,
-            boolean ccw) {
-        graphicsEnvironmentImpl.arc(canvas, centerX, centerY, startAngle, radius, endAngle, ccw);
-    }
+            boolean ccw);
 
     /**
      * Adds segments to the current path to make an arc.
@@ -68,14 +85,11 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * @param y2 the Y coordinate of the second point of the arc.
      * @param radius the radius of the arc in the range {0.0-positive infinity}.
      */
-    @Override
-    public void arcTo(double x1,
+    public abstract void arcTo(double x1,
             double y1,
             double x2,
             double y2,
-            double radius) {
-        graphicsEnvironmentImpl.arcTo(canvas, x1, y1, x2, y2, radius);
-    }
+            double radius);
 
     /**
      * Returns true if the the given x,y point is inside the path.
@@ -84,73 +98,49 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * @param y the Y coordinate to use for the check.
      * @return true if the point given is inside the path, false otherwise.
      */
-    @Override
-    public boolean isPointInPath(double x, double y) {
-        return graphicsEnvironmentImpl.isPointInPath(canvas, x, y);
-    }
+    public abstract boolean isPointInPath(double x, double y);
 
     /**
      * Fills the path with the current fill paint.
      */
-    @Override
-    public void fill() {
-        graphicsEnvironmentImpl.fill(canvas);
-    }
+    public abstract void fill();
 
     /**
      * Strokes the path with the current stroke paint.
      */
-    @Override
-    public void stroke() {
-        graphicsEnvironmentImpl.stroke(canvas);
-    }
+    public abstract void stroke();
 
     /**
      * Starts a Path
      */
-    @Override
-    public void beginPath() {
-        graphicsEnvironmentImpl.beginPath(canvas);
-    }
+    public abstract void beginPath();
 
     /**
      * Closes the path.
      */
-    @Override
-    public void closePath() {
-        graphicsEnvironmentImpl.closePath(canvas);
-    }
+    public abstract void closePath();
 
     /**
      * Clips using the current path
      */
-    @Override
-    public void clip() {
-        graphicsEnvironmentImpl.clip(canvas);
-    }
+    public abstract void clip();
 
     /**
      * Issues a move command for the current path to the given x,y coordinate.
      *
-     * @param x0 the X position for the move to command.
-     * @param y0 the Y position for the move to command.
+     * @param x the X position for the move to command.
+     * @param y the Y position for the move to command.
      */
-    @Override
-    public void moveTo(double x, double y) {
-        graphicsEnvironmentImpl.moveTo(canvas, x, y);
-    }
+    public abstract void moveTo(double x, double y);
 
     /**
      * Adds segments to the current path to make a line at the given x,y
      * coordinate.
      *
-     * @param x1 the X coordinate of the ending point of the line.
-     * @param y1 the Y coordinate of the ending point of the line.
+     * @param x the X coordinate of the ending point of the line.
+     * @param y the Y coordinate of the ending point of the line.
      */
-    @Override
-    public void lineTo(double x, double y) {
-        graphicsEnvironmentImpl.lineTo(canvas, x, y);
-    }
+    public abstract void lineTo(double x, double y);
 
     /**
      * Adds segments to the current path to make a quadratic curve.
@@ -160,10 +150,7 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * @param x the X coordinate of the end point
      * @param y the Y coordinate of the end point
      */
-    @Override
-    public void quadraticCurveTo(double cpx, double cpy, double x, double y) {
-        graphicsEnvironmentImpl.quadraticCurveTo(canvas, cpx, cpy, x, y);
-    }
+    public abstract void quadraticCurveTo(double cpx, double cpy, double x, double y);
 
     /**
      * Adds segments to the current path to make a cubic bezier curve.
@@ -175,10 +162,7 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * @param x the X coordinate of the end point.
      * @param y the Y coordinate of the end point.
      */
-    @Override
-    public void bezierCurveTo(double cp1x, double cp1y, double cp2x, double cp2y, double x, double y) {
-        graphicsEnvironmentImpl.bezierCurveTo(canvas, cp1x, cp1y, cp2x, cp2y, x, y);
-    }
+    public abstract void bezierCurveTo(double cp1x, double cp1y, double cp2x, double cp2y, double x, double y);
 
     /**
      * Fills a rectangle using the current fill paint.
@@ -188,10 +172,7 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * @param width the width of the rectangle.
      * @param height the height of the rectangle.
      */
-    @Override
-    public void fillRect(double x, double y, double width, double height) {
-        graphicsEnvironmentImpl.fillRect(canvas, x, y, width, height);
-    }
+    public abstract void fillRect(double x, double y, double width, double height);
 
     /**
      * Strokes a rectangle using the current stroke paint.
@@ -201,10 +182,7 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * @param width the width of the rectangle.
      * @param height the height of the rectangle.
      */
-    @Override
-    public void strokeRect(double x, double y, double width, double height) {
-        graphicsEnvironmentImpl.strokeRect(canvas, x, y, width, height);
-    }
+    public abstract void strokeRect(double x, double y, double width, double height);
 
     /**
      * Clears a portion of the canvas with a transparent color value.
@@ -214,10 +192,7 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * @param width width of the rectangle.
      * @param height height of the rectangle.
      */
-    @Override
-    public void clearRect(double x, double y, double width, double height) {
-        graphicsEnvironmentImpl.clearRect(canvas, x, y, width, height);
-    }
+    public abstract void clearRect(double x, double y, double width, double height);
 
     /**
      * Clears a portion of the canvas with a transparent color value.
@@ -227,10 +202,7 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * @param width width of the rectangle.
      * @param height height of the rectangle.
      */
-    @Override
-    public void rect(double x, double y, double width, double height) {
-        graphicsEnvironmentImpl.rect(canvas, x, y, width, height);
-    }
+    public abstract void rect(double x, double y, double width, double height);
 
     /**
      * Saves the following attributes onto a stack.
@@ -254,10 +226,7 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * This method does NOT alter the current state in any way. Also, not that
      * the current path is not saved.
      */
-    @Override
-    public void save() {
-        graphicsEnvironmentImpl.save(canvas);
-    }
+    public abstract void save();
 
     /**
      * Pops the state off of the stack, setting the following attributes to
@@ -282,20 +251,14 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * <li>Fill Rule</li>
      * </ul>
      */
-    @Override
-    public void restore() {
-        graphicsEnvironmentImpl.restore(canvas);
-    }
+    public abstract void restore();
 
     /**
      * Rotates the current transform in degrees.
      *
      * @param angle value in degrees to rotate the current transform.
      */
-    @Override
-    public void rotate(double angle) {
-        graphicsEnvironmentImpl.rotate(canvas, angle);
-    }
+    public abstract void rotate(double angle);
 
     /**
      * Concatenates the input with the current transform.
@@ -307,10 +270,7 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * @param mxt - the X coordinate translation element of the 3x4 matrix
      * @param myt - the Y coordinate translation element of the 3x4 matrix
      */
-    @Override
-    public void transform(double mxx, double myx, double mxy, double myy, double mxt, double myt) {
-        graphicsEnvironmentImpl.transform(canvas, mxx, myx, mxy, myy, mxt, myt);
-    }
+    public abstract void transform(double mxx, double myx, double mxy, double myy, double mxt, double myt);
 
     /**
      * Concatenates the input with the current transform.
@@ -322,10 +282,7 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * @param mxt - the X coordinate translation element of the 3x4 matrix
      * @param myt - the Y coordinate translation element of the 3x4 matrix
      */
-    @Override
-    public void setTransform(double mxx, double myx, double mxy, double myy, double mxt, double myt) {
-        graphicsEnvironmentImpl.setTransform(canvas, mxx, myx, mxy, myy, mxt, myt);
-    }
+    public abstract void setTransform(double mxx, double myx, double mxy, double myy, double mxt, double myt);
 
     /**
      * Translates the current transform by x, y.
@@ -333,10 +290,7 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * @param x value to translate along the x axis.
      * @param y value to translate along the y axis.
      */
-    @Override
-    public void translate(double x, double y) {
-        graphicsEnvironmentImpl.translate(canvas, x, y);
-    }
+    public abstract void translate(double x, double y);
 
     /**
      * Scales the current transform by x, y.
@@ -344,10 +298,7 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * @param x value to scale in the x axis.
      * @param y value to scale in the y axis.
      */
-    @Override
-    public void scale(double x, double y) {
-        graphicsEnvironmentImpl.scale(canvas, x, y);
-    }
+    public abstract void scale(double x, double y);
 
     /**
      * Draws an image at the given x, y position using the width and height of
@@ -359,11 +310,7 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * @param y the Y coordinate on the destination for the upper left of the
      * image.
      */
-    @Override
-    public void drawImage(Image image, double x, double y) {
-        Object nativeImage = graphicsEnvironmentImpl.drawImage(canvas, image, x, y, image.getCached());
-        image.cache(nativeImage);
-    }
+    public abstract void drawImage(Image image, double x, double y);
 
     /**
      * Draws an image into the given destination rectangle of the canvas. The
@@ -377,11 +324,7 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * @param width the width of the destination rectangle.
      * @param height the height of the destination rectangle.
      */
-    @Override
-    public void drawImage(Image image, double x, double y, double width, double height) {
-        Object nativeImage = graphicsEnvironmentImpl.drawImage(canvas, image, x, y, width, height, image.getCached());
-        image.cache(nativeImage);
-    }
+    public abstract void drawImage(Image image, double x, double y, double width, double height);
 
     /**
      * Draws the current source rectangle of the given image to the given
@@ -397,11 +340,7 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * @param dw the destination rectangle's width.
      * @param dh the destination rectangle's height.
      */
-    @Override
-    public void drawImage(Image image, double sx, double sy, double sw, double sh, double dx, double dy, double dw, double dh) {
-        Object nativeImage = graphicsEnvironmentImpl.drawImage(canvas, image, sx, sy, sw, sh, dx, dy, dw, dh, image.getCached());
-        image.cache(nativeImage);
-    }
+    public abstract void drawImage(Image image, double sx, double sy, double sw, double sh, double dx, double dy, double dw, double dh);
 
     /**
      * Merges two images drawing one on top of the other and returning the
@@ -409,21 +348,9 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      *
      * @param a the lower Image
      * @param b the upper Image
-     * @return
+     * @return the merged Image
      */
-    @Override
-    public Image merge(Image a, Image b) {
-        if (a.getCached() == null) {
-            drawImage(a, 0, 0);
-        }
-        if (b.getCached() == null) {
-            drawImage(b, 0, 0);
-        }
-        Object nativeImage = graphicsEnvironmentImpl.mergeImages(canvas, a, b, a.getCached(), b.getCached());
-        Image merged = Image.create("should add real path here");
-        merged.cache(nativeImage);
-        return merged;
-    }
+    public abstract Image merge(Image a, Image b);
 
 //    public void setShadowColor(String color) {
 //        graphicsEnvironmentImpl.setShadowColor(color);
@@ -461,40 +388,28 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      *
      * @return a value of butt, round, or square.
      */
-    @Override
-    public String getLineCap() {
-        return graphicsEnvironmentImpl.getLineCap(canvas);
-    }
+    public abstract String getLineCap();
 
     /**
      * Sets the current stroke line cap attribute.
      *
-     * @param style a value of miter, bevel, or round.
+     * @param style a value of butt,round,square.
      */
-    @Override
-    public void setLineCap(String style) {
-        graphicsEnvironmentImpl.setLineCap(canvas, style);
-    }
+    public abstract void setLineCap(String style);
 
     /**
      * Gets the current stroke line join attribute.
      *
      * @return a value of miter, bevel, or round.
      */
-    @Override
-    public String getLineJoin() {
-        return graphicsEnvironmentImpl.getLineJoin(canvas);
-    }
+    public abstract String getLineJoin();
 
     /**
      * Sets the current stroke line join attribute.
      *
      * @param style a value of miter, bevel, or round.
      */
-    @Override
-    public void setLineJoin(String style) {
-        graphicsEnvironmentImpl.setLineJoin(canvas, style);
-    }
+    public abstract void setLineJoin(String style);
 
     /**
      * Gets the current line width attribute.
@@ -503,22 +418,16 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * and leaving the value unchanged.
      *
      */
-    @Override
-    public double getLineWidth() {
-        return graphicsEnvironmentImpl.getLineWidth(canvas);
-    }
+    public abstract double getLineWidth();
 
     /**
      * Sets the current line width attribute.
      *
-     * @param lw value between 0 and infinity, with any other value being
+     * @param width value between 0 and infinity, with any other value being
      * ignored and leaving the value unchanged.
      *
      */
-    @Override
-    public void setLineWidth(double width) {
-        graphicsEnvironmentImpl.setLineWidth(canvas, width);
-    }
+    public abstract void setLineWidth(double width);
 
     /**
      * Gets the current miter limit attribute.
@@ -526,75 +435,52 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * @return limit value between 0 and positive infinity with any other value
      * being ignored and leaving the value unchanged.
      */
-    @Override
-    public double getMiterLimit() {
-        return graphicsEnvironmentImpl.getMiterLimit(canvas);
-    }
+    public abstract double getMiterLimit();
 
     /**
      * Sets the current miter limit attribute.
      *
-     * @param ml miter limit value between 0 and positive infinity with any
+     * @param limit miter limit value between 0 and positive infinity with any
      * other value being ignored and leaving the value unchanged.
      */
-    @Override
-    public void setMiterLimit(double limit) {
-        graphicsEnvironmentImpl.setMiterLimit(canvas, limit);
-    }
+    public abstract void setMiterLimit(double limit);
 
     /**
      * Sets the fill style. Will be used when rendering something, e.g. calling
      * one of the fillText Methods.
      *
-     * @param style
+     * @param style the desired fill style
      */
-    @Override
-    public void setFillStyle(Style style) {
-        Object nativeFillStyle = graphicsEnvironmentImpl.setFillStyle(canvas, style, style.getCached());
-        style.cache(nativeFillStyle);
-    }
+    public abstract void setFillStyle(Style style);
 
     /**
      * get the current font
      *
      * @return current Font. of the fillText Methods.
      */
-    @Override
-    public String getFont() {
-        return graphicsEnvironmentImpl.getFont(canvas);
-    }
+    public abstract String getFont();
 
     /**
      * Set the Font. Will be used when rendering Text, e.g. by calling one of
      * the fillText Methods.
      *
-     * @param font
+     * @param font the desired font as a String
      */
-    @Override
-    public void setFont(String font) {
-        graphicsEnvironmentImpl.setFont(canvas, font);
-    }
+    public abstract void setFont(String font);
 
     /**
      * sets the Style of the Stroke.
      *
-     * @param style
+     * @param style the style to use
      */
-    @Override
-    public void setStrokeStyle(Style style) {
-        Object nativeStrokeStyle = graphicsEnvironmentImpl.setStrokeStyle(canvas, style, style.getCached());
-        style.cache(nativeStrokeStyle);
-    }
+    public abstract void setStrokeStyle(Style style);
 
     /**
      * Gets the current TextAlignment attribute
      *
      * @return TextAlignment with values of left, center, right, or justify.
      */
-    @Override
-    public String getTextAlign() {
-        return graphicsEnvironmentImpl.getTextAlign(canvas);
-    }
+    public abstract String getTextAlign();
 
     /**
      * Defines horizontal text alignment, relative to the text {@code x} origin.
@@ -617,30 +503,21 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      *
      * @param textAlign with values of left, center, right.
      */
-    @Override
-    public void setTextAlign(String textAlign) {
-        graphicsEnvironmentImpl.setTextAlign(canvas, textAlign);
-    }
+    public abstract void setTextAlign(String textAlign);
 
     /**
      * Gets the current Text Baseline attribute.
      *
      * @return baseline with values of top, center, baseline, or bottom
      */
-    @Override
-    public String getTextBaseline() {
-        return graphicsEnvironmentImpl.getTextBaseline(canvas);
-    }
+    public abstract String getTextBaseline();
 
     /**
      * Sets the current Text Baseline attribute.
      *
-     * @param baseline with values of top, center, baseline, or bottom
+     * @param textbaseline with values of top, center, baseline, or bottom
      */
-    @Override
-    public void setTextBaseline(String textbaseline) {
-        graphicsEnvironmentImpl.setTextBaseline(canvas, textbaseline);
-    }
+    public abstract void setTextBaseline(String textbaseline);
 
     /**
      * Renders the indicated String with current fill. default is black.
@@ -649,10 +526,7 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * @param x x coordinate of start position
      * @param y y coordinate of start position
      */
-    @Override
-    public void fillText(String text, double x, double y) {
-        graphicsEnvironmentImpl.fillText(canvas, text, x, y);
-    }
+    public abstract void fillText(String text, double x, double y);
 
     /**
      * Renders the indicated String with current fill. default is black.
@@ -662,10 +536,7 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * @param y y coordinate of start position
      * @param maxWidth maximum width of text
      */
-    @Override
-    public void fillText(String text, double x, double y, double maxWidth) {
-        graphicsEnvironmentImpl.fillText(canvas, text, x, y, maxWidth);
-    }
+    public abstract void fillText(String text, double x, double y, double maxWidth);
 
     /**
      * Check the length of a text before writing it to the Canvas. Takes into
@@ -674,10 +545,7 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * @param text the text to measure
      * @return the length in pixels
      */
-    @Override
-    public Dimension measureText(String text) {
-        return graphicsEnvironmentImpl.measureText(canvas, text);
-    }
+    public abstract Dimension measureText(String text);
 
     /**
      * Renders the indicated String (with no fill)
@@ -686,10 +554,7 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * @param x x coordinate of start position
      * @param y y coordinate of start position
      */
-    @Override
-    public void strokeText(String text, double x, double y) {
-        graphicsEnvironmentImpl.strokeText(canvas, text, x, y);
-    }
+    public abstract void strokeText(String text, double x, double y);
 
     /**
      * Renders the indicated String (with no fill)
@@ -699,35 +564,26 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * @param y y coordinate of start position
      * @param maxWidth maximum width of text
      */
-    @Override
-    public void strokeText(String text, double x, double y, double maxWidth) {
-        graphicsEnvironmentImpl.strokeText(canvas, text, x, y, maxWidth);
-    }
+    public abstract void strokeText(String text, double x, double y, double maxWidth);
 
     /**
      * Get a pixel array that you can manipulate, e.g. apply effects /
      * transparency
      *
-     * @param x width
+     * @param x width 
      * @param y height
-     * @return a PixelMap
+     * @return a PixelMap a new ImageData Objesct with the specified Dimensions
      */
-    @Override
-    public ImageData createPixelMap(double x, double y) {
-        return graphicsEnvironmentImpl.createPixelMap(canvas, x, y);
-    }
+    public abstract ImageData createPixelMap(double x, double y);
 
     /**
      * Create a new ImageData object with the same dimensions as the object
      * specified by imageData (this does not copy the image data)
      *
-     * @param pixelMap
-     * @return
+     * @param pixelMap the ImageData to copy the Dimensions from
+     * @return a new ImageData Objesct with the specified Dimensions
      */
-    @Override
-    public ImageData createPixelMap(ImageData pixelMap) {
-        return graphicsEnvironmentImpl.createPixelMap(canvas, pixelMap);
-    }
+    public abstract ImageData createPixelMap(ImageData pixelMap);
 
     /**
      * Get the pixels for a region of your GraphicsContext2D
@@ -736,12 +592,9 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * @param y start y coordinate
      * @param width width
      * @param height height
-     * @return
+     * @return An ImageData Object containing a snapshot of the specified Region.
      */
-    @Override
-    public ImageData getSnapshot(double x, double y, double width, double height) {
-        return graphicsEnvironmentImpl.getPixelMap(canvas, x, y, width, height);
-    }
+    public abstract ImageData getSnapshot(double x, double y, double width, double height);
 
     /**
      * Render an ImageData Object at the specified position
@@ -750,69 +603,47 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * @param x start x coordinate
      * @param y start y coordinate
      */
-    @Override
-    public void drawPixelMap(ImageData pixelMap, double x, double y) {
-        graphicsEnvironmentImpl.putPixelMap(canvas, pixelMap, x, y);
-    }
+    public abstract void drawPixelMap(ImageData pixelMap, double x, double y);
 
     /*
      * Render an ImageData Object at the specified position
-     *
-     * @param pixelMap the Pixel array to draw
+     * @param pixelMap  the Pixel array to draw
      * @param x start x coordinate
      * @param y start y coordinate
-     * @param dirtyx The horizontal (x) value, in pixels, where to place the
-     * image on the canvas
-     * @param dirtyy The vertical (y) value, in pixels, where to place the image
-     * on the canvas
+     * @param dirtyx The horizontal (x) value, in pixels, where to place the image on the canvas
+     * @param dirtyy The vertical (y) value, in pixels, where to place the image on the canvas
      * @param dirtywidth The width to use to draw the image on the canvas
      * @param dirtyheight The height to use to draw the image on the canvas
      */
-//    @Override
-//    public void drawPixelMap(ImageData pixelMap, double x, double y, double dirtyx, double dirtyy, double dirtywidth, double dirtyheight) {
-//        graphicsEnvironmentImpl.putPixelMap(canvas, pixelMap, x, y, dirtyx, dirtyy, dirtywidth, dirtyheight);
-//    }
-
+//    public abstract void drawPixelMap(ImageData pixelMap, double x, double y, double dirtyx, double dirtyy, double dirtywidth, double dirtyheight);
     /**
      * Sets the global alpha of the current state.
      *
      * @param alpha value in the range {@code 0.0-1.0}. The value is clamped if
      * it is out of range.
      */
-    @Override
-    public void setGlobalAlpha(double alpha) {
-        graphicsEnvironmentImpl.setGlobalAlpha(canvas, alpha);
-    }
+    public abstract void setGlobalAlpha(double alpha);
 
     /**
      * Gets the current global alpha.
      *
      * @return the current global alpha.
      */
-    @Override
-    public double getGlobalAlpha() {
-        return graphicsEnvironmentImpl.getGlobalAlpha(canvas);
-    }
+    public abstract double getGlobalAlpha();
 
     /**
      * Sets the global blend mode.
      *
-     * @param op the BlendMode that will be set.
+     * @param operation the BlendMode that will be set.
      */
-    @Override
-    public void setGlobalCompositeOperation(String operation) {
-        graphicsEnvironmentImpl.setGlobalCompositeOperation(canvas, operation);
-    }
+    public abstract void setGlobalCompositeOperation(String operation);
 
     /**
      * Gets the global blend mode.
      *
      * @return the global BlendMode of the current state.
      */
-    @Override
-    public String getGlobalCompositeOperation() {
-        return graphicsEnvironmentImpl.getGlobalCompositeOperation(canvas);
-    }
+    public abstract String getGlobalCompositeOperation();
 
     /**
      * Create a LinearGradient to use in Canvas.
@@ -821,12 +652,10 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * @param y0 y coordinate of start point
      * @param x1 x coordinate of end point
      * @param y1 y coordinate of end point
+     * @param stops The Stop(s) definig this Gradient
      * @return the gradient
      */
-    @Override
-    public LinearGradient createLinearGradient(double x0, double y0, double x1, double y1, Map<Double, String> stops) {
-        return Style.LinearGradient.create(x0, y0, x1, y1, stops);
-    }
+    public abstract LinearGradient createLinearGradient(double x0, double y0, double x1, double y1, List<Stop> stops);
 
     /**
      * Create an Image Pattern from a source Image and a repeat style. Possible
@@ -836,10 +665,7 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * @param repeat the repeat style
      * @return the Pattern
      */
-    @Override
-    public Pattern createPattern(Image image, String repeat) {
-        return new Pattern(image, repeat);
-    }
+    public abstract Pattern createPattern(Image image, String repeat);
 
     /**
      * Create a RadialGradient
@@ -850,23 +676,18 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * @param x1 x coordinate of ending circle
      * @param y1 y coordinate of ending circle
      * @param r1 radius of ending circle
+     * @param stops the Stops defining this Gradient
      * @return the Gradient
      */
-    @Override
-    public RadialGradient createRadialGradient(double x0, double y0, double r0, double x1, double y1, double r1, Map<Double, String> stops) {
-        return RadialGradient.create(x0, y0, r0, x1, y1, r1, stops);
-    }
+    public abstract RadialGradient createRadialGradient(double x0, double y0, double r0, double x1, double y1, double r1, List<Stop> stops);
 
     /**
      * Convert this String Representation of a Color to a Color Object.
      *
-     * @param webColor
+     * @param webColor the String describing the color, e.g. #ff0000 for red. 
      * @return The Color represented by the input
      */
-    @Override
-    public Color getWebColor(String webColor) {
-        return new Style.Color(webColor);
-    }
+    public abstract Color getWebColor(String webColor);
 
     /**
      * Get the height of this GraphicsContext2D (which should be the same as the
@@ -874,10 +695,7 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      *
      * @return the height of this GraphicsContext2D
      */
-    @Override
-    public int getHeight() {
-        return graphicsEnvironmentImpl.getHeight(canvas);
-    }
+    public abstract int getHeight();
 
     /**
      * Get the width of this GraphicsContext2D (which should be the same as the
@@ -885,10 +703,7 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      *
      * @return the width of this GraphicsContext2D
      */
-    @Override
-    public int getWidth() {
-        return graphicsEnvironmentImpl.getWidth(canvas);
-    }
+    public abstract int getWidth();
 
 //    public void setHeight(int height) {
 //        graphicsEnvironmentImpl.setHeight(height);
@@ -901,14 +716,11 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * Fill a circle with a center position of centerX, centerY and the
      * specified radius.
      *
-     * @param centerX
-     * @param centerY
-     * @param radius
+     * @param centerX center x coordinate
+     * @param centerY center y coordinate
+     * @param radius the radius
      */
-    @Override
-    public void fillCircle(float centerX, float centerY, float radius) {
-        graphicsEnvironmentImpl.arc(canvas, centerX, centerY, radius, 0, Math.PI * 2, false);
-    }
+    public abstract void fillCircle(float centerX, float centerY, float radius);
 
     /**
      * Fills a polygon with the given points using the currently set fill paint.
@@ -919,35 +731,26 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * points.
      * @param vertexCount the number of points that make the polygon.
      */
-    @Override
-    public void fillPolygon(double[] x_coord, double[] y_coord, int vertexCount) {
-        if (vertexCount >= 1 && x_coord != null && x_coord.length >= vertexCount && y_coord != null && y_coord.length >= vertexCount) {
-            graphicsEnvironmentImpl.beginPath(canvas);
-        }
-        graphicsEnvironmentImpl.moveTo(canvas, x_coord[0], y_coord[0]);
-        for (int i = 1; i < vertexCount; i++) {
-            graphicsEnvironmentImpl.lineTo(canvas, x_coord[i], y_coord[i]);
+    public abstract void fillPolygon(double[] x_coord, double[] y_coord, int vertexCount);
 
-        }
-        graphicsEnvironmentImpl.closePath(canvas);
-        graphicsEnvironmentImpl.fill(canvas);
-        graphicsEnvironmentImpl.stroke(canvas);
-    }
+    /**
+     * Get the Dimension of an Image
+     *
+     * @param img the Image to measure
+     * @return the Dimension of this Image
+     */
+    public abstract Dimension getDimension(Image img);
 
-    @Override
-    public Dimension getDimension(Image img) {
-        int width = graphicsEnvironmentImpl.getWidth(canvas, img, img.getCached());
-        int height = graphicsEnvironmentImpl.getHeight(canvas, img, img.getCached());
-        return new Dimension(width, height);
-    }
+    /**
+     * Set the width of this GraphicsContext2D
+     * @param width target width for this GraphicsContext2D
+     */
+    public abstract void setWidth(int width);
 
-    @Override
-    public void setWidth(int width) {
-        graphicsEnvironmentImpl.setWidth(canvas, width);
-    }
+    /**
+     * set the height of this GraphicsContext2D
+     * @param height target height for this GraphicsContext2D
+     */
+    public abstract void setHeight(int height);
 
-    @Override
-    public void setHeight(int height) {
-        graphicsEnvironmentImpl.setHeight(canvas, height);
-    }
 }

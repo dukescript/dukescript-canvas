@@ -22,7 +22,7 @@
  */
 package com.dukescript.canvas.html;
 
-import com.dukescript.html.canvas.ImageData;
+import com.dukescript.api.canvas.ImageData;
 import net.java.html.js.JavaScriptBody;
 
 

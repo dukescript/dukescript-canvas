@@ -20,7 +20,7 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package com.dukescript.html.canvas;
+package com.dukescript.api.canvas;
 
 /**
  * ImageData is an updateable 2-Dimensional Map of Color values. Created (
