@@ -4,10 +4,10 @@
     <parent>
         <artifactId>canvas</artifactId>
         <groupId>com.dukescript.canvas</groupId>
-        <version>0.7.1-SNAPSHOT</version>
+        <version>0.7.1</version>
     </parent>
     <artifactId>canvas-api</artifactId>
-    <version>0.7.1-SNAPSHOT</version>
+    <version>0.7.1</version>
     <packaging>bundle</packaging>
     <name>canvas-api</name>
     <url>http://maven.apache.org</url>
