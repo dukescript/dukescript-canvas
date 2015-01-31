@@ -47,9 +47,9 @@
     </properties>
    
     <scm>
-        <connection>scm:git:https://github.com/eppleton/canvas.git</connection>
-        <url>scm:git:https://github.com/eppleton/canvas.git</url>
-        <developerConnection>scm:git:https://github.com/eppleton/canvas.git</developerConnection>
+        <connection>scm:git:https://github.com/dukescript/dukescript-canvas.git</connection>
+        <url>https://github.com/dukescript/dukescript-canvas.git</url>
+        <developerConnection>scm:git:https://github.com/dukescript/dukescript-canvas.git</developerConnection>
         <tag>release-${releaseVersion}</tag>
     </scm>
     
