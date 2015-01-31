@@ -5,7 +5,7 @@
     <name>DukeScript Canvas API</name>
     <groupId>com.dukescript.canvas</groupId>
     <artifactId>canvas</artifactId>
-    <version>0.7</version>
+    <version>0.7.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <url>http://dukescript.com</url>
     <description>A Java API for painting to a canvas</description>
@@ -96,19 +96,19 @@
                 <configuration>
                     <subpackages>${publicPackages}</subpackages>
                     <skip>false</skip>
-                    <excludePackageNames>com.dukescript.html.canvas.impl.*</excludePackageNames>
+                    <excludePackageNames>com.dukescript.impl.*</excludePackageNames>
                     <groups>
                         <group>
                             <title>Render on Canvas</title>
-                            <packages>com.dukescript.html.canvas</packages>
+                            <packages>com.dukescript.api.canvas</packages>
                         </group>
                         <group>
                             <title>Create Canvas Context</title>
-                            <packages>com.dukescript.canvas.html:com.dukescript.canvas.javafx</packages>
+                            <packages>com.dukescript.api.canvas:com.dukescript.canvas.html</packages>
                         </group>
                         <group>
                             <title>Service Provider APIs (not commonly interesting)</title>
-                            <packages>com.dukescript.html.canvas.spi</packages>
+                            <packages>com.dukescript.spi.canvas</packages>
                         </group>
                     </groups>   
                          
