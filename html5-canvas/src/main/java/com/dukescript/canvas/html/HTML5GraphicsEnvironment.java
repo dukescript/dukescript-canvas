@@ -22,8 +22,6 @@
  */
 package com.dukescript.canvas.html;
 
-import java.util.Map;
-import java.util.Set;
 import com.dukescript.api.canvas.Dimension;
 import com.dukescript.api.canvas.Image;
 import com.dukescript.api.canvas.ImageData;
