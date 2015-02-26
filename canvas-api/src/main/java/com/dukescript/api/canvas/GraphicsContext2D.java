@@ -22,7 +22,6 @@
  */
 package com.dukescript.api.canvas;
 
-import java.util.Map;
 import com.dukescript.api.canvas.Style.Color;
 import com.dukescript.api.canvas.Style.LinearGradient;
 import com.dukescript.api.canvas.Style.Pattern;
@@ -40,6 +39,7 @@ import java.util.List;
  * {@code
  * GraphicsContext2D gc = HTML5Graphics.getOrCreate("canvas");
  * }
+ * </pre>
  * @author antonepple
  */
 public abstract class GraphicsContext2D {
@@ -60,24 +60,30 @@ public abstract class GraphicsContext2D {
     }
 
     /**
-     * Adds path elements to the current path to make an arc.
+     * Adds path elements to the current path to make an arc
+     * which is centered at (<code>centerX</code>, <code>centerY</code>) position 
+     * with <code>radius</code> starting at 
+     * <code>startAngle</code> and ending at <code>endAngle</code> 
+     * going in the given direction by anticlockwise.
      *
      * @param centerX the center x position of the arc.
      * @param centerY the center y position of the arc.
      * @param startAngle the startAngle of the arc
      * @param radius the radius of the arc.
      * @param endAngle the endAngle of the arc
-     * @param ccw the direction of the arc (counterclockwise)
+     * @param acw the direction of the arc (anticlockwise)
      */
     public abstract void arc(double centerX,
             double centerY,
-            double startAngle,
             double radius,
+            double startAngle,
             double endAngle,
-            boolean ccw);
+            boolean acw);
 
     /**
-     * Adds segments to the current path to make an arc.
+     * Adds segments to the current path 
+     * with the given control points and radius, 
+     * connected to the previous point by a straight line.
      *
      * @param x1 the X coordinate of the first point of the arc.
      * @param y1 the Y coordinate of the first point of the arc.

@@ -57,15 +57,15 @@ public interface GraphicsEnvironment <Canvas>{
      * @param startAngle the startAngle of the arc
      * @param radius the radius of the arc.
      * @param endAngle the endAngle of the arc
-     * @param ccw the direction of the arc (counterclockwise)
+     * @param acw the direction of the arc (anticlockwise)
      */
     public void arc(Canvas canvas, 
             double centerX,
             double centerY,
-            double startAngle,
             double radius,
+            double startAngle,
             double endAngle,
-            boolean ccw);
+            boolean acw);
 
     /**
      * Adds segments to the current path to make an arc.

@@ -41,35 +41,16 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
         this.canvas = c;
     }
 
-    /**
-     * Adds path elements to the current path to make an arc.
-     *
-     * @param centerX the center x position of the arc.
-     * @param centerY the center y position of the arc.
-     * @param startAngle the startAngle of the arc
-     * @param radius the radius of the arc.
-     * @param endAngle the endAngle of the arc
-     * @param ccw the direction of the arc (counterclockwise)
-     */
     @Override
     public void arc(double centerX,
             double centerY,
-            double startAngle,
             double radius,
+            double startAngle,
             double endAngle,
-            boolean ccw) {
-        graphicsEnvironmentImpl.arc(canvas, centerX, centerY, startAngle, radius, endAngle, ccw);
+            boolean acw) {
+        graphicsEnvironmentImpl.arc(canvas, centerX, centerY, startAngle, radius, endAngle, acw);
     }
 
-    /**
-     * Adds segments to the current path to make an arc.
-     *
-     * @param x1 the X coordinate of the first point of the arc.
-     * @param y1 the Y coordinate of the first point of the arc.
-     * @param x2 the X coordinate of the second point of the arc.
-     * @param y2 the Y coordinate of the second point of the arc.
-     * @param radius the radius of the arc in the range {0.0-positive infinity}.
-     */
     @Override
     public void arcTo(double x1,
             double y1,

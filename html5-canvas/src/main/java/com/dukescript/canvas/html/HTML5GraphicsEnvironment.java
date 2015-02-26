@@ -59,16 +59,19 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
             + "var body = document.getElementsByTagName('body')[0];body.appendChild(canvas); return canvas;")
     private static native Object createImpl(String id);
 
-    @JavaScriptBody(args = {"canvas", "centerX", "centerY", "startAngle", "radius", "endAngle", "ccw"},
-            body = "var context = canvas.getContext('2d');context.beginPath();context.arc(centerX,centerY, radius, startAngle, endAngle,ccw);context.fill();")
+    @JavaScriptBody(args = {"canvas", "centerX", "centerY", "startAngle", "radius", "endAngle", "acw"},
+            body = "var context = canvas.getContext('2d');"
+                + "context.beginPath();"
+                + "context.arc(centerX,centerY, radius, startAngle, endAngle,acw);"
+                + "context.fill();")
     @Override
     public native void arc(Object canvas,
             double centerX,
             double centerY,
-            double startAngle,
             double radius,
+            double startAngle,
             double endAngle,
-            boolean ccw);
+            boolean acw);
 
     @JavaScriptBody(args = {"canvas", "x1", "y1", "x2", "y2", "r"},
             body = "canvas.getContext('2d').arcTo(x1,y1,x2,y2,r);")
