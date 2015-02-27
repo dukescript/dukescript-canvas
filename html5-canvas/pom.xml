@@ -4,12 +4,11 @@
     <parent>
         <artifactId>canvas</artifactId>
         <groupId>com.dukescript.canvas</groupId>
-        <version>0.7.1</version>
+        <version>0.7.2</version>
     </parent>
   
     <groupId>com.dukescript.canvas</groupId>
     <artifactId>html5-canvas</artifactId>
-    <version>0.7.1</version>
     <packaging>bundle</packaging>
     <name>html5-canvas</name>
     <url>http://maven.apache.org</url>

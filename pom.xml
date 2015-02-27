@@ -5,7 +5,7 @@
     <name>DukeScript Canvas API</name>
     <groupId>com.dukescript.canvas</groupId>
     <artifactId>canvas</artifactId>
-    <version>0.7.1</version>
+    <version>0.7.2</version>
     <packaging>pom</packaging>
     <url>http://dukescript.com</url>
     <description>A Java API for painting to a canvas</description>
@@ -38,8 +38,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <net.java.html.version>1.1</net.java.html.version>
-        <com.dukescript.canvas.version>0.7-SNAPSHOT</com.dukescript.canvas.version>
-        <nb.html.version>1.1</nb.html.version>
         <brwsr.html.version>1.0</brwsr.html.version>
         <bck2brwsr.version>0.13</bck2brwsr.version>
         <jersey.version>2.12</jersey.version>
