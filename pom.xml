@@ -119,7 +119,7 @@
                         </group>
                         <group>
                             <title>Create Canvas Context</title>
-                            <packages>com.dukescript.api.canvas:com.dukescript.canvas.html</packages>
+                            <packages>com.dukescript.canvas.html</packages>
                         </group>
                         <group>
                             <title>Service Provider APIs (not commonly interesting)</title>
