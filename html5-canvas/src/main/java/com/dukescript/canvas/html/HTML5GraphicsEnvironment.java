@@ -252,9 +252,6 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
     @JavaScriptBody(wait4js=false, args = {"canvas", "obj"}, body = "canvas.getContext('2d').fillStyle=obj;")
     private native void setFillStyleImpl(Object canvas, Object obj);
 
-    @JavaScriptBody(wait4js=false, args = {"canvas", "style"}, body = "canvas.getContext('2d').strokeStyle=style.valueOf();")
-    public native void setStrokeStyle(Object Canvas, String style);
-
     @Override
     public Object setStrokeStyle(Object canvas, Style style, Object nativeStyle) {
         if (nativeStyle == null) {
@@ -264,8 +261,8 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
         return nativeStyle;
     }
 
-    @JavaScriptBody(wait4js=false, args = {"context", "obj"}, body = "context.strokeStyle=obj;")
-    private native void setStrokeStyleImpl(Object context, Object obj);
+    @JavaScriptBody(wait4js=false, args = {"canvas", "obj"}, body = "canvas.getContext('2d').strokeStyle=obj;")
+    private native void setStrokeStyleImpl(Object canvas, Object obj);
     /*
      @JavaScriptBody(wait4js=false, args = {"color"}, body = "canvas.getContext('2d').shadowColor=color.valueOf();")
      @Override
