@@ -20,7 +20,7 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package com.dukescript.canvas.html;
+package com.dukescript.impl.canvas;
 
 import com.dukescript.spi.canvas.GraphicsEnvironment;
 import java.io.File;
@@ -42,22 +42,13 @@ public class HTMLEnvRegisterdIT {
     }
     
     @Test public void noAnnotationProcessorRegistrationFound() throws Exception {
-        final String expName = "META-INF/services/" + GraphicsEnvironment.class.getName();
-        final String prefix = "META-INF/services/";
-        File jar = new File(HTML5GraphicsEnvironment.class.getProtectionDomain().getCodeSource().getLocation().toURI());
-        JarFile jf = new JarFile(jar);
-        Enumeration<JarEntry> en = jf.entries();
+        final String expName = GraphicsEnvironment.class.getName();
+        File dir= new File(HTML5GraphicsEnvironment.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+        File mtfs = new File(new File(dir, "META-INF"), "services");
         int cnt = 0;
-        while (en.hasMoreElements()) {
-            JarEntry e = en.nextElement();
-            if (e.getName().equals(prefix)) {
-                continue;
-            }
-            if (e.getName().startsWith(prefix)) {
-                assertEquals(e.getName(), expName);
-                cnt++;
-                continue;
-            }
+        for (String name : mtfs.list()) {
+            assertEquals(name, expName);
+            cnt++;
         }
         assertEquals(cnt, 1, "Only one entry in META-INF/services");
     }

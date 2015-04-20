@@ -20,32 +20,21 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package com.dukescript.canvas.html;
-
-import net.java.html.js.JavaScriptBody;
-
+package com.dukescript.impl.canvas;
 
 /**
  *
  * @author Anton Epple toni.epple@eppleton.de
  */
-class LinearGradientWrapper{
+class PatternWrapper {
 
-    private final Object gradient;
+    private final Object pattern;
 
-    LinearGradientWrapper(Object linearGradient) {
-        this.gradient = linearGradient;
+    public PatternWrapper(Object pattern) {
+        this.pattern = pattern;
     }
 
     Object object() {
-        return gradient;
+        return pattern;
     }
-
-    public void addColorStop(double position, String color) {
-        addColorStopImpl(gradient, position, color);
-    }
-
-    @JavaScriptBody(args = {"gradient", "position", "color"}, body =
-            "gradient.addColorStop(position,color)")
-    private static native void addColorStopImpl(Object gradient, double position, String color);
 }

@@ -20,7 +20,7 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package com.dukescript.canvas.html;
+package com.dukescript.impl.canvas;
 
 import com.dukescript.api.canvas.ImageData;
 import net.java.html.js.JavaScriptBody;
@@ -34,7 +34,7 @@ import net.java.html.js.JavaScriptBody;
 class ImageDataWrapper implements ImageData <Object>{
 
     private double width, height = -1;
-    private Object imageData;
+    private final Object imageData;
     private Data data;
 
     public ImageDataWrapper(Object imageData) {
@@ -51,6 +51,7 @@ class ImageDataWrapper implements ImageData <Object>{
     @JavaScriptBody(args = {"imageData"}, body = "return imageData.data")
     public native Object getDataImpl(Object imageData);
 
+    @Override
     public double getWidth() {
         if (width == -1) {
             width = getWidthImpl(imageData);
@@ -61,6 +62,7 @@ class ImageDataWrapper implements ImageData <Object>{
     @JavaScriptBody(args = {"imageData"}, body = "return imagedata.width;")
     private static native int getWidthImpl(Object imageData);
 
+    @Override
     public double getHeight() {
         if (height == -1) {
             height = getHeightImpl(imageData);

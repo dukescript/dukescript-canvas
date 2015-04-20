@@ -20,7 +20,7 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package com.dukescript.canvas.html;
+package com.dukescript.impl.canvas;
 
 import com.dukescript.api.canvas.Dimension;
 import com.dukescript.api.canvas.Image;
@@ -440,21 +440,21 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
     @Override
     public native String getGlobalCompositeOperation(Object canvas);
 
-    public LinearGradientWrapper createLinearGradientWrapper(Object canvas, double x0, double y0, double x1, double y1) {
+    LinearGradientWrapper createLinearGradientWrapper(Object canvas, double x0, double y0, double x1, double y1) {
         return new LinearGradientWrapper(createLinearGradientImpl(canvas, x0, y0, x1, y1));
     }
 
     @JavaScriptBody(args = {"canvas", "x0", "y0", "x1", "y1"}, body = "return canvas.getContext('2d').createLinearGradient(x0,y0,x1,y1);")
     private native Object createLinearGradientImpl(Object canvas, double x0, double y0, double x1, double y1);
 
-    public PatternWrapper createPatternWrapper(Object canvas, Image image, String repeat) {
+    PatternWrapper createPatternWrapper(Object canvas, Image image, String repeat) {
         return new PatternWrapper(createPatternImpl(canvas, image, repeat));
     }
 
     @JavaScriptBody(args = {"canvas", "image", "repeat"}, body = "return canvas.getContext('2d').createPattern(image, repeat);")
     private static native Object createPatternImpl(Object canvas, Image image, String repeat);
 
-    public RadialGradientWrapper createRadialGradientWrapper(Object canvas, double x0, double y0, double r0, double x1, double y1, double r1) {
+    RadialGradientWrapper createRadialGradientWrapper(Object canvas, double x0, double y0, double r0, double x1, double y1, double r1) {
         return new RadialGradientWrapper(createRadialGradientImpl(canvas, x0, y0, r0, x1, y1, r1));
     }
 

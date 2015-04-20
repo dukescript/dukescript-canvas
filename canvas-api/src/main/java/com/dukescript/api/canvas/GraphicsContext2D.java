@@ -29,7 +29,10 @@ import com.dukescript.api.canvas.Style.RadialGradient;
 import com.dukescript.api.canvas.Style.Stop;
 import com.dukescript.spi.canvas.GraphicsEnvironment;
 import com.dukescript.impl.canvas.CnvsAccssr;
+import com.dukescript.impl.canvas.HTML5GraphicsEnvironment;
+import com.dukescript.spi.canvas.GraphicsUtils;
 import java.util.List;
+import java.util.ServiceLoader;
 
 /**
  * A 2D Graphics Context similar to HTML5 or JavaFX GraphicsContext. Use this to
@@ -57,6 +60,36 @@ public abstract class GraphicsContext2D {
      * only one subclass GraphicsContextImpl
      */
     GraphicsContext2D() {
+    }
+    
+    /**
+     * Looks for the Canvas with the specified canvasID. If there is one, it will be 
+     * returned. If there is none a new one will be created. The method
+     * searches for all {@link GraphicsEnvironment registered environments}
+     * and the first one that returns valid context is returned. In case there
+     * is no valid provider, fallback is made to provider rendering on an
+     * HTML canvas element.
+     * 
+     * @param canvasId The canvasId to look for.
+     * @return a Canvas with the specified canvasId. 
+     * @since 0.8
+     */
+    public static GraphicsContext2D getOrCreate(String canvasId) {
+        for (GraphicsEnvironment env : ServiceLoader.load(GraphicsEnvironment.class)) {
+            GraphicsContext2D ret = createContext(env, canvasId);
+            if (ret != null) {
+                return ret;
+            }
+        }
+        return createContext(new HTML5GraphicsEnvironment(), canvasId);
+    }
+
+    static <Canvas> GraphicsContext2D createContext(GraphicsEnvironment<Canvas> env, String canvasId) {
+        Canvas canvas = env.getOrCreateCanvas(canvasId);
+        if (canvas != null) {
+            return new GraphicsContext2DImpl(env, canvas);
+        }
+        return null;
     }
 
     /**

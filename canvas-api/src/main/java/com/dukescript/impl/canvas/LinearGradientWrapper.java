@@ -20,28 +20,32 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package com.dukescript.canvas.html;
+package com.dukescript.impl.canvas;
 
-import com.dukescript.api.canvas.GraphicsContext2D;
-import com.dukescript.spi.canvas.GraphicsUtils;
-
+import net.java.html.js.JavaScriptBody;
 
 
 /**
  *
- * @author antonepple
+ * @author Anton Epple toni.epple@eppleton.de
  */
-public class HTML5Graphics{
-    private HTML5Graphics() {
+class LinearGradientWrapper{
+
+    private final Object gradient;
+
+    LinearGradientWrapper(Object linearGradient) {
+        this.gradient = linearGradient;
     }
-    
-    /**
-     * Looks for the Canvas with the specified canvasID. If there is one, it will be 
-     * returned. If there is none a new one will be created. 
-     * @param canvasId The canvasId to look for.
-     * @return a Canvas with the specified canvasId. 
-     */
-    public static GraphicsContext2D getOrCreate(String canvasId) {
-        return GraphicsUtils.getOrCreate(new HTML5GraphicsEnvironment(), canvasId);
+
+    Object object() {
+        return gradient;
     }
+
+    public void addColorStop(double position, String color) {
+        addColorStopImpl(gradient, position, color);
+    }
+
+    @JavaScriptBody(args = {"gradient", "position", "color"}, body =
+            "gradient.addColorStop(position,color)")
+    private static native void addColorStopImpl(Object gradient, double position, String color);
 }

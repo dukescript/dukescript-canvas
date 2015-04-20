@@ -20,7 +20,7 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-package com.dukescript.canvas.html;
+package com.dukescript.impl.canvas;
 
 import net.java.html.js.JavaScriptBody;
 
@@ -31,7 +31,7 @@ import net.java.html.js.JavaScriptBody;
  */
 class RadialGradientWrapper {
 
-    private Object gradient;
+    private final Object gradient;
 
     public RadialGradientWrapper(Object radialGradient) {
         this.gradient = radialGradient;

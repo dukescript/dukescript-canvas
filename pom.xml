@@ -5,7 +5,7 @@
     <name>DukeScript Canvas API</name>
     <groupId>com.dukescript.canvas</groupId>
     <artifactId>canvas</artifactId>
-    <version>0.7.2</version>
+    <version>0.8</version>
     <packaging>pom</packaging>
     <url>http://dukescript.com</url>
     <description>A Java API for painting to a canvas</description>
@@ -62,7 +62,6 @@
     <modules>
         <module>canvas-api</module>
         <!--<module>javafx-canvas</module>-->
-        <module>html5-canvas</module>
 <!--        <module>canvas-archetype</module>
         <module>canvas-archetype-test</module>-->
     </modules>
