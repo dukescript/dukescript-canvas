@@ -182,7 +182,7 @@
                             <organizationName>Eppleton IT Consulting</organizationName>
                             <licenseName>gpl_v3</licenseName>
                             <failOnMissingHeader>true</failOnMissingHeader>
-                            <descriptionTemplate>src/license/header.txt</descriptionTemplate>
+                            <descriptionTemplate>license/header.txt</descriptionTemplate>
                             <roots>
                                 <root>src</root>
                             </roots>  
