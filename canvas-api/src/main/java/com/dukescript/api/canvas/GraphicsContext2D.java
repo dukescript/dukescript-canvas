@@ -30,7 +30,6 @@ import com.dukescript.api.canvas.Style.Stop;
 import com.dukescript.spi.canvas.GraphicsEnvironment;
 import com.dukescript.impl.canvas.CnvsAccssr;
 import com.dukescript.impl.canvas.HTML5GraphicsEnvironment;
-import com.dukescript.spi.canvas.GraphicsUtils;
 import java.util.List;
 import java.util.ServiceLoader;
 

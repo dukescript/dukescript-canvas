@@ -127,7 +127,19 @@
                     </groups>   
                          
                 </configuration>
-            </plugin>        
+            </plugin>
+             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <localCheckout>true</localCheckout>
+                    <pushChanges>false</pushChanges>
+                    <useReleaseProfile>false</useReleaseProfile>
+                    <arguments>-Pjvnet-release -Pgpg</arguments>
+                    <tag>release-${releaseVersion}</tag>
+                </configuration>
+            </plugin>      
         </plugins>
     </build>
     <profiles> 
