@@ -559,13 +559,13 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
                     ((RadialGradient) style).getX1(),
                     ((RadialGradient) style).getY1(),
                     ((RadialGradient) style).getR1());
-            List<Style.Stop> stops = ((LinearGradient) style).getStops();
+            List<Style.Stop> stops = ((RadialGradient) style).getStops();
 
             for (Style.Stop stop : stops) {
                 addColorStopImpl(style, stop.getPos(), stop.getStyle());
             }
 
-            return gradient;
+            return gradient.object();
         } else if (style instanceof LinearGradient) {
             LinearGradientWrapper gradient = createLinearGradientWrapper(
                     canvas,
