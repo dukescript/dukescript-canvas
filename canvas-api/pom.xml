@@ -4,7 +4,7 @@
     <parent>
         <artifactId>canvas</artifactId>
         <groupId>com.dukescript.canvas</groupId>
-        <version>0.8</version>
+        <version>0.9-SNAPSHOT</version>
     </parent>
     <artifactId>canvas-api</artifactId>
     <packaging>bundle</packaging>
