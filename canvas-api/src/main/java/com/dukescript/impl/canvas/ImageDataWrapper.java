@@ -33,7 +33,8 @@ import net.java.html.js.JavaScriptBody;
  */
 class ImageDataWrapper implements ImageData <Object>{
 
-    private double width, height = -1;
+    private double width = -1;
+    private double height = -1;
     private final Object imageData;
     private Data data;
 
@@ -59,7 +60,7 @@ class ImageDataWrapper implements ImageData <Object>{
         return width;
     }
 
-    @JavaScriptBody(args = {"imageData"}, body = "return imagedata.width;")
+    @JavaScriptBody(args = {"imageData"}, body = "return imageData.width;")
     private static native int getWidthImpl(Object imageData);
 
     @Override
@@ -70,7 +71,7 @@ class ImageDataWrapper implements ImageData <Object>{
         return height;
     }
 
-    @JavaScriptBody(args = {"imageData"}, body = "return imagedata.height;")
+    @JavaScriptBody(args = {"imageData"}, body = "return imageData.height;")
     private static native int getHeightImpl(Object imageData);
 
     Object object() {
@@ -149,7 +150,7 @@ class ImageDataWrapper implements ImageData <Object>{
         @JavaScriptBody(args = {"data", "index", "value"}, body = "data[index]=value;")
         private static native void setImpl(Object data, int index, int value);
 
-        @JavaScriptBody(args = {"imagedata", "index"}, body = "return data[index];")
+        @JavaScriptBody(args = {"data", "index"}, body = "return data[index];")
         private static native int getImpl(Object data, int index);
     }
 }
