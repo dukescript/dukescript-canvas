@@ -62,7 +62,6 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
     @JavaScriptBody(wait4js = false, args = {"canvas", "centerX", "centerY", "radius", "startAngle", "endAngle", "acw"},
             body = "var context = canvas.getContext('2d');"
             + "context.beginPath();"
-            + "console.log('circle '+centerX+','+centerY+','+radius+','+startAngle+','+endAngle+','+acw);"
             + "context.arc(centerX, centerY, radius, startAngle, endAngle, acw);"
             + "context.fill();"
     )
@@ -562,7 +561,7 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
             List<Style.Stop> stops = ((RadialGradient) style).getStops();
 
             for (Style.Stop stop : stops) {
-                addColorStopImpl(style, stop.getPos(), stop.getStyle());
+                addColorStopImpl(gradient.object(), stop.getPos(), stop.getStyle());
             }
 
             return gradient.object();
