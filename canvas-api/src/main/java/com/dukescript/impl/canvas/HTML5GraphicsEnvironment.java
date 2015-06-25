@@ -563,7 +563,6 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
 
             for (Style.Stop stop : stops) {
                 addColorStopImpl(style, stop.getPos(), stop.getStyle());
-
             }
 
             return gradient;
@@ -576,9 +575,9 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
                     ((LinearGradient) style).getY1());
             List<Style.Stop> stops = ((LinearGradient) style).getStops();
             for (Style.Stop stop : stops) {
-                addColorStopImpl(gradient, stop.getPos(), stop.getStyle());
+                addColorStopImpl(gradient.object(), stop.getPos(), stop.getStyle());
             }
-            return gradient;
+            return gradient.object();
         }
         return null;
     }
