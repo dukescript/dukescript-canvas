@@ -12,11 +12,11 @@
     
     <developers>
         <developer>
-            <id>eppleton</id>
+            <id>monacotoni</id>
             <name>Anton Epple</name>
-            <email>dukescript@eppleton.de</email>
-            <organization>Eppleton IT Consulting</organization>
-            <organizationUrl>http://www.eppleton.de</organizationUrl>
+            <email>toni.epple@dukescript.com</email>
+            <organization>Dukehoff GmbH</organization>
+            <organizationUrl>http://www.dukescript.com</organizationUrl>
             <roles>
                 <role>Project-Administrator</role>
                 <role>Developer</role>
@@ -27,10 +27,10 @@
     
     <licenses>
         <license>
-            <name>gpl_v3</name>
-            <url>http://www.gnu.org/licenses/gpl-3.0.html</url>
+            <name>MIT</name>
+            <url>https://opensource.org/licenses/MIT</url>
             <comments>
-                Visit http://dukescript.com for support and commercial license.
+                Canvas API is free to use with the MIT license.
             </comments>
         </license>
     </licenses>
@@ -62,7 +62,7 @@
     <modules>
         <module>canvas-api</module>
         <!--<module>javafx-canvas</module>-->
-<!--        <module>canvas-archetype</module>
+        <!--        <module>canvas-archetype</module>
         <module>canvas-archetype-test</module>-->
     </modules>
     
@@ -128,7 +128,7 @@
                          
                 </configuration>
             </plugin>
-             <plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
                 <version>2.4</version>
@@ -164,7 +164,7 @@
                 </plugins>
             </build>
         </profile>
-<!--        <profile>
+        <profile>
             <id>license</id>
             <activation>
                 <property>
@@ -179,8 +179,8 @@
                         <version>1.7</version>
                         <configuration>
                             <inceptionYear>2015</inceptionYear>
-                            <organizationName>Eppleton IT Consulting</organizationName>
-                            <licenseName>gpl_v3</licenseName>
+                            <organizationName>Dukehoff GmbH</organizationName>
+                            <licenseName>mit</licenseName>
                             <failOnMissingHeader>true</failOnMissingHeader>
                             <descriptionTemplate>src/license/header.txt</descriptionTemplate>
                             <roots>
@@ -188,6 +188,19 @@
                             </roots>  
                         </configuration>
                         <executions>
+                            <execution>
+                                <id>first</id>
+                                <goals>
+                                    <goal>update-file-header</goal>
+                                </goals>
+                                <phase>process-sources</phase>
+                                <configuration>
+                                    <licenseName>mit</licenseName>
+                                    <roots>
+                                        <root>src</root>
+                                    </roots>
+                                </configuration>
+                            </execution>
                             <execution>
                                 <phase>verify</phase>
                                 <goals>
@@ -198,7 +211,7 @@
                     </plugin>
                 </plugins>
             </build>
-        </profile>-->
+        </profile>
     </profiles>
     
 </project>
