@@ -27,7 +27,6 @@ package com.dukescript.api.canvas;
  * #L%
  */
 
-import java.util.Map;
 import com.dukescript.api.canvas.Style.Color;
 import com.dukescript.api.canvas.Style.LinearGradient;
 import com.dukescript.api.canvas.Style.Pattern;
