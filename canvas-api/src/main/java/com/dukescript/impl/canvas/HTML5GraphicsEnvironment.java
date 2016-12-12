@@ -66,9 +66,7 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
 
     @JavaScriptBody(wait4js = false, args = {"canvas", "centerX", "centerY", "radius", "startAngle", "endAngle", "acw"},
             body = "var context = canvas.getContext('2d');"
-            + "context.beginPath();"
             + "context.arc(centerX, centerY, radius, startAngle, endAngle, acw);"
-            + "context.fill();"
     )
     @Override
     public native void arc(Object canvas,

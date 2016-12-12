@@ -29,10 +29,7 @@ package com.dukescript.impl.canvas;
 
 import com.dukescript.spi.canvas.GraphicsEnvironment;
 import java.io.File;
-import java.util.Enumeration;
 import java.util.ServiceLoader;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
 

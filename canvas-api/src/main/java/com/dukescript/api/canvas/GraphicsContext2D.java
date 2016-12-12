@@ -39,13 +39,11 @@ import java.util.ServiceLoader;
 
 /**
  * A 2D Graphics Context similar to HTML5 or JavaFX GraphicsContext. Use this to
- * paint on your Canvas. To get a GraphicsContext2D call
- * For HTML 5 :
- * <pre>
- * {@code
- * GraphicsContext2D gc = HTML5Graphics.getOrCreate("canvas");
- * }
- * </pre>
+ * paint on your Canvas. To initialize your instance of a {@link GraphicsContext2D}
+ * use:
+ * <p>
+ * {@codesnippet com.dukescript.impl.canvas.DrawTest#initializeCanvasContext}
+ *
  * @author antonepple
  */
 public abstract class GraphicsContext2D {
@@ -71,7 +69,8 @@ public abstract class GraphicsContext2D {
      * searches for all {@link GraphicsEnvironment registered environments}
      * and the first one that returns valid context is returned. In case there
      * is no valid provider, fallback is made to provider rendering on an
-     * HTML canvas element.
+     * HTML canvas element. Use as:
+     * {@codesnippet com.dukescript.impl.canvas.DrawTest#initializeCanvasContext}
      * 
      * @param canvasId The canvasId to look for.
      * @return a Canvas with the specified canvasId. 
@@ -148,17 +147,25 @@ public abstract class GraphicsContext2D {
     public abstract void fill();
 
     /**
-     * Strokes the path with the current stroke paint.
+     * Strokes the path with the current stroke paint. To draw a path
+     * use following steps terminated with a call to {@link #stroke()}:
+     * <p>
+     * {@codesnippet com.dukescript.impl.canvas.DrawTest#drawSquare}
      */
     public abstract void stroke();
 
     /**
-     * Starts a Path
+     * Starts a Path. To draw a path, begin with {@link #beginPath()} and then:
+     * <p>
+     * {@codesnippet com.dukescript.impl.canvas.DrawTest#drawSquare}
      */
     public abstract void beginPath();
 
     /**
-     * Closes the path.
+     * Closes the path. The line goes to the {@link #beginPath() begining}
+     * of the path. To draw a path use:
+     * <p>
+     * {@codesnippet com.dukescript.impl.canvas.DrawTest#drawSquare}
      */
     public abstract void closePath();
 
@@ -169,6 +176,9 @@ public abstract class GraphicsContext2D {
 
     /**
      * Issues a move command for the current path to the given x,y coordinate.
+     * Use as:
+     * <p>
+     * {@codesnippet com.dukescript.impl.canvas.DrawTest#drawSquare}
      *
      * @param x the X position for the move to command.
      * @param y the Y position for the move to command.
@@ -177,7 +187,8 @@ public abstract class GraphicsContext2D {
 
     /**
      * Adds segments to the current path to make a line at the given x,y
-     * coordinate.
+     * coordinate. Use as:
+     * {@codesnippet com.dukescript.impl.canvas.DrawTest#drawSquare}
      *
      * @param x the X coordinate of the ending point of the line.
      * @param y the Y coordinate of the ending point of the line.

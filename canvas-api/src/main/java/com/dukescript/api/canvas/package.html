@@ -26,22 +26,8 @@
 
 <html>
     <body>
-        The purpose of this API is to create an interface for drawing to a canvas using Java.
-        Currently we offer an implementation for HTML 5 Canvas. If required you may add implementations
-        e.g. for a native Canvas API on Android or iOS. You can choose your implementation depending 
-        on the availability on your target platform and performance requirements.
-
-        For HTML5:
-        <pre>
-<code>
-GraphicsContext2D gc = HTML5Graphics.getOrCreate("canvas");
-</code>
-        </pre>
-        For JavaFX:
-        <pre>
-<code>
-GraphicsContext2D gc = JavaFXGraphics.getOrCreate("canvas");
-</code></pre>
-
+        Create instance of {@link com.dukescript.api.canvas.GraphicsContext2D} 
+        and {@link com.dukescript.api.canvas.GraphicsContext2D#lineTo draw on it}
+        using Java.
     </body>
 </html>

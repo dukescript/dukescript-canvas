@@ -8,7 +8,7 @@
     </parent>
     <artifactId>canvas-api</artifactId>
     <packaging>bundle</packaging>
-    <name>canvas-api</name>
+    <name>Canvas API</name>
     <url>http://maven.apache.org</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -48,7 +48,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>          
+            </plugin>
             <plugin>
                 <groupId>org.apidesign.bck2brwsr</groupId>
                 <artifactId>bck2brwsr-maven-plugin</artifactId>
@@ -58,6 +58,9 @@
                         <goals>
                             <goal>library</goal>
                         </goals>
+                        <configuration>
+                            <ignoreBootClassPath>false</ignoreBootClassPath>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -73,6 +76,36 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9</version>
+                <configuration>
+                    <subpackages>${publicPackages}</subpackages>
+                    <skip>false</skip>
+                    <excludePackageNames>com.dukescript.impl.*</excludePackageNames>
+                    <groups>
+                        <group>
+                            <title>Render on Canvas</title>
+                            <packages>com.dukescript.api.canvas</packages>
+                        </group>
+                        <group>
+                            <title>Service Provider APIs (not commonly interesting)</title>
+                            <packages>com.dukescript.spi.canvas</packages>
+                        </group>
+                    </groups>
+                    <links>
+                        <link>https://seleniumhq.github.io/selenium/docs/api/java/</link>
+                    </links>
+                    <doclet>org.apidesign.javadoc.codesnippet.Doclet</doclet>
+                    <docletArtifact>
+                        <groupId>org.apidesign.javadoc</groupId>
+                        <artifactId>codesnippet-doclet</artifactId>
+                        <version>0.10</version>
+                    </docletArtifact>
+                    <additionalparam>-snippetpath "${basedir}/src/test/java"</additionalparam>
+                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -94,6 +127,19 @@
             <artifactId>org-openide-util-lookup</artifactId>
             <version>RELEASE80</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.dukescript.api</groupId>
+            <artifactId>junit-browser-runner</artifactId>
+            <version>0.9</version>
+            <scope>test</scope>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.html</groupId>
+            <artifactId>net.java.html.boot.fx</artifactId>
+            <version>${net.java.html.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <description>Representation of an HTML page context a Java program operates in.</description>
