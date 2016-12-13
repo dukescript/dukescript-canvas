@@ -52,7 +52,7 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
             double startAngle,
             double endAngle,
             boolean acw) {
-        graphicsEnvironmentImpl.arc(canvas, centerX, centerY, startAngle, radius, endAngle, acw);
+        graphicsEnvironmentImpl.arc(canvas, centerX, centerY, radius, startAngle, endAngle, acw);
     }
 
     @Override

@@ -25,7 +25,6 @@ package com.dukescript.impl.canvas;
  * THE SOFTWARE.
  * #L%
  */
-
 import com.dukescript.api.canvas.GraphicsContext2D;
 import net.java.html.junit.BrowserRunner;
 import net.java.html.junit.HTMLContent;
@@ -34,7 +33,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @HTMLContent("\n"
-    + "  <canvas id='test'></canvas>\n"
+        + "  <canvas id='test'></canvas>\n"
+
 )
 @RunWith(BrowserRunner.class)
 public class DrawTest {
@@ -60,4 +60,28 @@ public class DrawTest {
         context.stroke();
         // END: com.dukescript.impl.canvas.DrawTest#drawSquare
     }
+
+    @Test
+    public void drawArcTo() {
+        // BEGIN: com.dukescript.impl.canvas.DrawTest#drawArcTo
+        context.setStrokeStyle(context.getWebColor("blue"));
+        context.beginPath();
+        context.moveTo(20, 20);           // Create a starting point
+        context.lineTo(100, 20);          // Create a horizontal line
+        context.arcTo(150, 20, 150, 70, 50); // Create an arc
+        context.lineTo(150, 120);         // Continue with vertical line
+        context.stroke();
+        // END: com.dukescript.impl.canvas.DrawTest#drawArcTo
+    }
+
+    @Test
+    public void drawCircle() {
+        // BEGIN: com.dukescript.impl.canvas.DrawTest#drawCircle
+        context.setStrokeStyle(context.getWebColor("red"));
+        context.beginPath();
+        context.arc(10, 20, 10, 0, 2 * Math.PI, false);
+        context.stroke();
+        // END: com.dukescript.impl.canvas.DrawTest#drawCircle
+    }
+
 }
