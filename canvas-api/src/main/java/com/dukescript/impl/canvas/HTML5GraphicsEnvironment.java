@@ -1,4 +1,3 @@
-
 package com.dukescript.impl.canvas;
 
 /*
@@ -26,7 +25,6 @@ package com.dukescript.impl.canvas;
  * THE SOFTWARE.
  * #L%
  */
-
 import com.dukescript.api.canvas.Dimension;
 import com.dukescript.api.canvas.Image;
 import com.dukescript.api.canvas.ImageData;
@@ -54,8 +52,22 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
         if (canvas == null) {
             canvas = createImpl(id);
         }
+        adjustForRetina(canvas);
         return canvas;
     }
+
+    @JavaScriptBody(args = {"canvas"}, body = "var ctx = canvas.getContext('2d');\n"
+            + "if (window.devicePixelRatio) {\n"
+            + "var devicePixelRatio = window.devicePixelRatio;\n"
+            + "var canvasWidth = canvas.getAttribute('width');\n"
+            + "var canvasHeight = canvas.getAttribute('height');\n"
+            + "canvas.style.width = canvasWidth+'px';\n"
+            + "canvas.style.height = canvasHeight+'px';\n"
+            + "canvas.setAttribute( 'width', canvasWidth*devicePixelRatio);\n"
+            + "canvas.setAttribute( 'height', canvasHeight*devicePixelRatio);\n"
+            + "ctx.transform(devicePixelRatio,0,0,devicePixelRatio,0,0);\n"
+            + "}")
+    private static native void adjustForRetina(Object canvas);
 
     @JavaScriptBody(args = {"id"}, body = "var canvas = document.getElementById(id);return canvas;")
     private static native Object getImpl(String id);
@@ -268,6 +280,7 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
 
     @JavaScriptBody(wait4js = false, args = {"canvas", "obj"}, body = "canvas.getContext('2d').strokeStyle=obj;")
     private native void setStrokeStyleImpl(Object canvas, Object obj);
+
     /*
      @JavaScriptBody(wait4js=false, args = {"color"}, body = "canvas.getContext('2d').shadowColor=color.valueOf();")
      @Override
@@ -304,7 +317,6 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
      @Override
      public native double getShadowOffsetY();
      */
-
     @JavaScriptBody(args = {"canvas"}, body = "return canvas.getContext('2d').lineCap;")
     @Override
     public native String getLineCap(Object canvas);
@@ -362,7 +374,7 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
     public native void setTextBaseline(Object canvas, String textbaseline);
 
     @JavaScriptBody(wait4js = false, args = {"canvas", "text", "x", "y"}, body = "canvas.getContext('2d').fillText(text,x,y);")
-//    @JavaScriptBody(wait4js=false, args = {"text", "x", "y"}, body = "console.log(text);")
+    //    @JavaScriptBody(wait4js=false, args = {"text", "x", "y"}, body = "console.log(text);")
     @Override
     public native void fillText(Object canvas, String text, double x, double y);
 
@@ -492,7 +504,7 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
 
 //    @JavaScriptBody(args = {"src"}, body = "var image = new Image();console.log('image complete '+image.complete);image.src = './'+ src; return image;")
     @JavaScriptBody(args = {"src"}, body = "var image = new Image();image.src = src; return image;")
-//    @JavaScriptBody(args = {"src"}, body = "return document.getElementById(src);")
+    //    @JavaScriptBody(args = {"src"}, body = "return document.getElementById(src);")
     private static native Object createImage(String src);
 
     @Override

@@ -5,7 +5,7 @@
     <name>DukeScript Canvas API</name>
     <groupId>com.dukescript.canvas</groupId>
     <artifactId>canvas</artifactId>
-    <version>0.9-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <url>http://dukescript.com</url>
     <description>A Java API for painting to a canvas</description>
