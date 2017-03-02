@@ -894,7 +894,9 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      */
     @Override
     public void fillCircle(float centerX, float centerY, float radius) {
+        graphicsEnvironmentImpl.beginPath(canvas);
         graphicsEnvironmentImpl.arc(canvas, centerX, centerY, radius, 0, Math.PI * 2, false);
+        graphicsEnvironmentImpl.fill(canvas);
     }
 
     /**
