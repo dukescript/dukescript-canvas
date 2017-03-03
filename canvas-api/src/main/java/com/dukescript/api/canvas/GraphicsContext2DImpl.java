@@ -897,6 +897,7 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
         graphicsEnvironmentImpl.beginPath(canvas);
         graphicsEnvironmentImpl.arc(canvas, centerX, centerY, radius, 0, Math.PI * 2, false);
         graphicsEnvironmentImpl.fill(canvas);
+        graphicsEnvironmentImpl.stroke(canvas);
     }
 
     /**

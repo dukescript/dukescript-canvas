@@ -1,4 +1,3 @@
-
 package com.dukescript.api.canvas;
 
 /*
@@ -26,7 +25,6 @@ package com.dukescript.api.canvas;
  * THE SOFTWARE.
  * #L%
  */
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -125,6 +123,155 @@ public class Style {
         public String getAsString() {
             return web;
         }
+
+        public static Color ALICEBLUE = new Color("#F0F8FF");
+        public static Color ANTIQUEWHITE = new Color("#FAEBD7");
+        public static Color AQUA = new Color("#00FFFF");
+        public static Color AQUAMARINE = new Color("#7FFFD4");
+        public static Color AZURE = new Color("#F0FFFF");
+        public static Color BEIGE = new Color("#F5F5DC");
+        public static Color BISQUE = new Color("#FFE4C4");
+        public static Color BLACK = new Color("#000000");
+        public static Color BLANCHEDALMOND = new Color("#FFEBCD");
+        public static Color BLUE = new Color("#0000FF");
+        public static Color BLUEVIOLET = new Color("#8A2BE2");
+        public static Color BROWN = new Color("#A52A2A");
+        public static Color BURLYWOOD = new Color("#DEB887");
+        public static Color CADETBLUE = new Color("#5F9EA0");
+        public static Color CHARTREUSE = new Color("#7FFF00");
+        public static Color CHOCOLATE = new Color("#D2691E");
+        public static Color CORAL = new Color("#FF7F50");
+        public static Color CORNFLOWERBLUE = new Color("#6495ED");
+        public static Color CORNSILK = new Color("#FFF8DC");
+        public static Color CRIMSON = new Color("#DC143C");
+        public static Color CYAN = new Color("#00FFFF");
+        public static Color DARKBLUE = new Color("#00008B");
+        public static Color DARKCYAN = new Color("#008B8B");
+        public static Color DARKGOLDENROD = new Color("#B8860B");
+        public static Color DARKGRAY = new Color("#A9A9A9");
+        public static Color DARKGREY = new Color("#A9A9A9");
+        public static Color DARKGREEN = new Color("#006400");
+        public static Color DARKKHAKI = new Color("#BDB76B");
+        public static Color DARKMAGENTA = new Color("#8B008B");
+        public static Color DARKOLIVEGREEN = new Color("#556B2F");
+        public static Color DARKORANGE = new Color("#FF8C00");
+        public static Color DARKORCHID = new Color("#9932CC");
+        public static Color DARKRED = new Color("#8B0000");
+        public static Color DARKSALMON = new Color("#E9967A");
+        public static Color DARKSEAGREEN = new Color("#8FBC8F");
+        public static Color DARKSLATEBLUE = new Color("#483D8B");
+        public static Color DARKSLATEGRAY = new Color("#2F4F4F");
+        public static Color DARKSLATEGREY = new Color("#2F4F4F");
+        public static Color DARKTURQUOISE = new Color("#00CED1");
+        public static Color DARKVIOLET = new Color("#9400D3");
+        public static Color DEEPPINK = new Color("#FF1493");
+        public static Color DEEPSKYBLUE = new Color("#00BFFF");
+        public static Color DIMGRAY = new Color("#696969");
+        public static Color DIMGREY = new Color("#696969");
+        public static Color DODGERBLUE = new Color("#1E90FF");
+        public static Color FIREBRICK = new Color("#B22222");
+        public static Color FLORALWHITE = new Color("#FFFAF0");
+        public static Color FORESTGREEN = new Color("#228B22");
+        public static Color FUCHSIA = new Color("#FF00FF");
+        public static Color GAINSBORO = new Color("#DCDCDC");
+        public static Color GHOSTWHITE = new Color("#F8F8FF");
+        public static Color GOLD = new Color("#FFD700");
+        public static Color GOLDENROD = new Color("#DAA520");
+        public static Color GRAY = new Color("#808080");
+        public static Color GREY = new Color("#808080");
+        public static Color GREEN = new Color("#008000");
+        public static Color GREENYELLOW = new Color("#ADFF2F");
+        public static Color HONEYDEW = new Color("#F0FFF0");
+        public static Color HOTPINK = new Color("#FF69B4");
+        public static Color INDIANRED = new Color("#CD5C5C");
+        public static Color INDIGO = new Color("#4B0082");
+        public static Color IVORY = new Color("#FFFFF0");
+        public static Color KHAKI = new Color("#F0E68C");
+        public static Color LAVENDER = new Color("#E6E6FA");
+        public static Color LAVENDERBLUSH = new Color("#FFF0F5");
+        public static Color LAWNGREEN = new Color("#7CFC00");
+        public static Color LEMONCHIFFON = new Color("#FFFACD");
+        public static Color LIGHTBLUE = new Color("#ADD8E6");
+        public static Color LIGHTCORAL = new Color("#F08080");
+        public static Color LIGHTCYAN = new Color("#E0FFFF");
+        public static Color LIGHTGOLDENRODYELLOW = new Color("#FAFAD2");
+        public static Color LIGHTGRAY = new Color("#D3D3D3");
+        public static Color LIGHTGREY = new Color("#D3D3D3");
+        public static Color LIGHTGREEN = new Color("#90EE90");
+        public static Color LIGHTPINK = new Color("#FFB6C1");
+        public static Color LIGHTSALMON = new Color("#FFA07A");
+        public static Color LIGHTSEAGREEN = new Color("#20B2AA");
+        public static Color LIGHTSKYBLUE = new Color("#87CEFA");
+        public static Color LIGHTSLATEGRAY = new Color("#778899");
+        public static Color LIGHTSLATEGREY = new Color("#778899");
+        public static Color LIGHTSTEELBLUE = new Color("#B0C4DE");
+        public static Color LIGHTYELLOW = new Color("#FFFFE0");
+        public static Color LIME = new Color("#00FF00");
+        public static Color LIMEGREEN = new Color("#32CD32");
+        public static Color LINEN = new Color("#FAF0E6");
+        public static Color MAGENTA = new Color("#FF00FF");
+        public static Color MAROON = new Color("#800000");
+        public static Color MEDIUMAQUAMARINE = new Color("#66CDAA");
+        public static Color MEDIUMBLUE = new Color("#0000CD");
+        public static Color MEDIUMORCHID = new Color("#BA55D3");
+        public static Color MEDIUMPURPLE = new Color("#9370DB");
+        public static Color MEDIUMSEAGREEN = new Color("#3CB371");
+        public static Color MEDIUMSLATEBLUE = new Color("#7B68EE");
+        public static Color MEDIUMSPRINGGREEN = new Color("#00FA9A");
+        public static Color MEDIUMTURQUOISE = new Color("#48D1CC");
+        public static Color MEDIUMVIOLETRED = new Color("#C71585");
+        public static Color MIDNIGHTBLUE = new Color("#191970");
+        public static Color MINTCREAM = new Color("#F5FFFA");
+        public static Color MISTYROSE = new Color("#FFE4E1");
+        public static Color MOCCASIN = new Color("#FFE4B5");
+        public static Color NAVAJOWHITE = new Color("#FFDEAD");
+        public static Color NAVY = new Color("#000080");
+        public static Color OLDLACE = new Color("#FDF5E6");
+        public static Color OLIVE = new Color("#808000");
+        public static Color OLIVEDRAB = new Color("#6B8E23");
+        public static Color ORANGE = new Color("#FFA500");
+        public static Color ORANGERED = new Color("#FF4500");
+        public static Color ORCHID = new Color("#DA70D6");
+        public static Color PALEGOLDENROD = new Color("#EEE8AA");
+        public static Color PALEGREEN = new Color("#98FB98");
+        public static Color PALETURQUOISE = new Color("#AFEEEE");
+        public static Color PALEVIOLETRED = new Color("#DB7093");
+        public static Color PAPAYAWHIP = new Color("#FFEFD5");
+        public static Color PEACHPUFF = new Color("#FFDAB9");
+        public static Color PERU = new Color("#CD853F");
+        public static Color PINK = new Color("#FFC0CB");
+        public static Color PLUM = new Color("#DDA0DD");
+        public static Color POWDERBLUE = new Color("#B0E0E6");
+        public static Color PURPLE = new Color("#800080");
+        public static Color REBECCAPURPLE = new Color("#663399");
+        public static Color RED = new Color("#FF0000");
+        public static Color ROSYBROWN = new Color("#BC8F8F");
+        public static Color ROYALBLUE = new Color("#4169E1");
+        public static Color SADDLEBROWN = new Color("#8B4513");
+        public static Color SALMON = new Color("#FA8072");
+        public static Color SANDYBROWN = new Color("#F4A460");
+        public static Color SEAGREEN = new Color("#2E8B57");
+        public static Color SEASHELL = new Color("#FFF5EE");
+        public static Color SIENNA = new Color("#A0522D");
+        public static Color SILVER = new Color("#C0C0C0");
+        public static Color SKYBLUE = new Color("#87CEEB");
+        public static Color SLATEBLUE = new Color("#6A5ACD");
+        public static Color SLATEGRAY = new Color("#708090");
+        public static Color SLATEGREY = new Color("#708090");
+        public static Color SNOW = new Color("#FFFAFA");
+        public static Color SPRINGGREEN = new Color("#00FF7F");
+        public static Color STEELBLUE = new Color("#4682B4");
+        public static Color TAN = new Color("#D2B48C");
+        public static Color TEAL = new Color("#008080");
+        public static Color THISTLE = new Color("#D8BFD8");
+        public static Color TOMATO = new Color("#FF6347");
+        public static Color TURQUOISE = new Color("#40E0D0");
+        public static Color VIOLET = new Color("#EE82EE");
+        public static Color WHEAT = new Color("#F5DEB3");
+        public static Color WHITE = new Color("#FFFFFF");
+        public static Color WHITESMOKE = new Color("#F5F5F5");
+        public static Color YELLOW = new Color("#FFFF00");
+        public static Color YELLOWGREEN = new Color("#9ACD32");
     }
 
     private static class Gradient extends Style {
@@ -138,9 +285,9 @@ public class Style {
          * @param y0 the y coordinate of the start point for this gradient
          * @param x1 the x coordinate of the end point for this gradient
          * @param y1 the y coordinate of the end point for this gradient
-         * @param stops  the stops of this gradient
+         * @param stops the stops of this gradient
          */
-        private Gradient(double x0, double y0, double x1, double y1,List<Stop> stops) {
+        private Gradient(double x0, double y0, double x1, double y1, List<Stop> stops) {
             this.x0 = x0;
             this.y0 = y0;
             this.x1 = x1;
@@ -199,7 +346,6 @@ public class Style {
             return y1;
         }
 
-
         /**
          * Get the stops of this gradient.
          *
@@ -254,7 +400,7 @@ public class Style {
      */
     public static class LinearGradient extends Gradient {
 
-       private LinearGradient(double x0, double y0, double x1, double y1,List<Stop> stops) {
+        private LinearGradient(double x0, double y0, double x1, double y1, List<Stop> stops) {
             super(x0, y0, x1, y1, stops);
         }
 
@@ -264,10 +410,10 @@ public class Style {
          * @param y0 the y coordinate of the start point for this gradient
          * @param x1 the x coordinate of the end point for this gradient
          * @param y1 the y coordinate of the end point for this gradient
-         * @param stops  the stops of this gradient
+         * @param stops the stops of this gradient
          * @return linearGradient the gradient
          */
-        public static LinearGradient create(double x0, double y0, double x1, double y1,List<Stop> stops) {
+        public static LinearGradient create(double x0, double y0, double x1, double y1, List<Stop> stops) {
             return new LinearGradient(x0, y0, x1, y1, stops);
         }
 
@@ -282,14 +428,13 @@ public class Style {
 
         final private double r0, r1;
 
-
         private RadialGradient(double x0, double y0, double r0, double x1, double y1, double r1, List<Stop> stops) {
-            super(x0, y0, x1, y1,stops);
+            super(x0, y0, x1, y1, stops);
             this.r0 = r0;
             this.r1 = r1;
         }
 
-         /**
+        /**
          * Create a new RadialGradient
          *
          * @param x0 x Coordinate of starting circle
@@ -298,13 +443,13 @@ public class Style {
          * @param x1 x coordinate of ending circle
          * @param y1 y coordinate of ending circle
          * @param r1 radius of ending circle
-         * @param stops  the stops of this gradient
+         * @param stops the stops of this gradient
          * @return radialGradient the gradient
          */
-        public static RadialGradient create(double x0, double y0, double r0, double x1, double y1, double r1, List<Stop> stops){
+        public static RadialGradient create(double x0, double y0, double r0, double x1, double y1, double r1, List<Stop> stops) {
             return new RadialGradient(x0, y0, r0, x1, y1, r1, stops);
         }
-        
+
         /**
          * get the radius of the start circle.
          *
@@ -337,9 +482,6 @@ public class Style {
          *
          * public void setR1(double r1) { this.r1 = r1; }
          */
-        
-        
-        
         @Override
         public int hashCode() {
             int hash = super.hashCode();
@@ -375,6 +517,7 @@ public class Style {
     }
 
     public static class Stop {
+
         private final double pos;
         private final String style;
 
@@ -390,8 +533,7 @@ public class Style {
         public String getStyle() {
             return style;
         }
-        
-        
+
     }
 
 }
