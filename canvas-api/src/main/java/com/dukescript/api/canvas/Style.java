@@ -272,6 +272,8 @@ public class Style {
         public static Color WHITESMOKE = new Color("#F5F5F5");
         public static Color YELLOW = new Color("#FFFF00");
         public static Color YELLOWGREEN = new Color("#9ACD32");
+        
+        public static Color TRANSPARENT = new Color("rgba(0,0,0,0.0)");
     }
 
     private static class Gradient extends Style {
