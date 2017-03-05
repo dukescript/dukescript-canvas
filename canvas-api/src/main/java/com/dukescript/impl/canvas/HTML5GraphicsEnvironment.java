@@ -491,16 +491,22 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
     }
 
     @Override
-    @JavaScriptBody(wait4js = false, args = {"canvas", "height"}, body = "canvas.height=height;")
     public void setHeight(Object canvas, int height) {
-
+        setHeight_impl(canvas, height);
+        adjustForRetina(canvas);
     }
+ 
+    @JavaScriptBody(wait4js = false, args = {"canvas", "height"}, body = "canvas.height=height;")
+    public static native void setHeight_impl(Object canvas, int height) ;
 
     @Override
-    @JavaScriptBody(wait4js = false, args = {"canvas", "width"}, body = "canvas.width=width;")
-    public void setWidth(Object canvas, int width) {
-
+    public void setWidth(Object canvas, int width){
+        setWidth_impl(canvas, width);
+        adjustForRetina(canvas);
     }
+    
+    @JavaScriptBody(wait4js = false, args = {"canvas", "width"}, body = "canvas.width=width;")
+    public static native void setWidth_impl(Object canvas, int width);
 
 //    @JavaScriptBody(args = {"src"}, body = "var image = new Image();console.log('image complete '+image.complete);image.src = './'+ src; return image;")
     @JavaScriptBody(args = {"src"}, body = "var image = new Image();image.src = src; return image;")
@@ -552,17 +558,16 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
 
 //    @JavaScriptBody(args = {"canvas"}, body = "return canvas.getContext('2d');")
 //    private static native Object getContext(Object canvas);
-    @JavaScriptBody(args = {"canvas"}, body = "return canvas.height;")
+    @JavaScriptBody(args = {"canvas"}, body = "var height = canvas.height;\n"
+                       + "var devicePixelRatio = window.devicePixelRatio;\n"
+            + "return (height/devicePixelRatio);"
+)
     private native int getHeightImpl(Object canvas);
 
-    @JavaScriptBody(args = {"canvas"}, body = "return canvas.width;")
+    @JavaScriptBody(args = {"canvas"}, body = "var width = canvas.width;\n"
+                       + "var devicePixelRatio = window.devicePixelRatio;\n"
+            + "return (width/devicePixelRatio);")
     private native int getWidthImpl(Object canvas);
-
-    @JavaScriptBody(wait4js = false, args = {"canvas", "width"}, body = "canvas.width = width;")
-    private native void setWidthImpl(Object canvas, int width);
-
-    @JavaScriptBody(wait4js = false, args = {"canvas", "height"}, body = "canvas.height = height;")
-    private native void setHeightImpl(Object canvas, int width);
 
     private Object createGradient(Object canvas, Style style) {
         if (style instanceof RadialGradient) {
