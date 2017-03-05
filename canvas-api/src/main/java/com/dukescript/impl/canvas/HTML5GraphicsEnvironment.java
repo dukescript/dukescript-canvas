@@ -69,6 +69,26 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
             + "}")
     private static native void adjustForRetina(Object canvas);
 
+    @JavaScriptBody(args = {"canvas"}, body = "var ctx = canvas.getContext('2d');\n"
+            + "if (window.devicePixelRatio) {\n"
+            + "var devicePixelRatio = window.devicePixelRatio;\n"
+            + "var canvasWidth = canvas.getAttribute('width');\n"
+            + "canvas.style.width = canvasWidth+'px';\n"
+            + "canvas.setAttribute( 'width', canvasWidth*devicePixelRatio);\n"
+            + "ctx.transform(devicePixelRatio,0,0,devicePixelRatio,0,0);\n"
+            + "}")
+    private static native void adjustWidthForRetina(Object canvas);
+
+    @JavaScriptBody(args = {"canvas"}, body = "var ctx = canvas.getContext('2d');\n"
+            + "if (window.devicePixelRatio) {\n"
+            + "var devicePixelRatio = window.devicePixelRatio;\n"
+            + "var canvasHeight = canvas.getAttribute('height');\n"
+            + "canvas.style.height = canvasHeight+'px';\n"
+            + "canvas.setAttribute( 'height', canvasHeight*devicePixelRatio);\n"
+            + "ctx.transform(devicePixelRatio,0,0,devicePixelRatio,0,0);\n"
+            + "}")
+    private static native void adjustHeightForRetina(Object canvas);
+
     @JavaScriptBody(args = {"id"}, body = "var canvas = document.getElementById(id);return canvas;")
     private static native Object getImpl(String id);
 
@@ -493,18 +513,18 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
     @Override
     public void setHeight(Object canvas, int height) {
         setHeight_impl(canvas, height);
-        adjustForRetina(canvas);
+        adjustHeightForRetina(canvas);
     }
- 
+
     @JavaScriptBody(wait4js = false, args = {"canvas", "height"}, body = "canvas.height=height;")
-    public static native void setHeight_impl(Object canvas, int height) ;
+    public static native void setHeight_impl(Object canvas, int height);
 
     @Override
-    public void setWidth(Object canvas, int width){
+    public void setWidth(Object canvas, int width) {
         setWidth_impl(canvas, width);
-        adjustForRetina(canvas);
+        adjustWidthForRetina(canvas);
     }
-    
+
     @JavaScriptBody(wait4js = false, args = {"canvas", "width"}, body = "canvas.width=width;")
     public static native void setWidth_impl(Object canvas, int width);
 
@@ -559,13 +579,13 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
 //    @JavaScriptBody(args = {"canvas"}, body = "return canvas.getContext('2d');")
 //    private static native Object getContext(Object canvas);
     @JavaScriptBody(args = {"canvas"}, body = "var height = canvas.height;\n"
-                       + "var devicePixelRatio = window.devicePixelRatio;\n"
+            + "var devicePixelRatio = window.devicePixelRatio;\n"
             + "return (height/devicePixelRatio);"
-)
+    )
     private native int getHeightImpl(Object canvas);
 
     @JavaScriptBody(args = {"canvas"}, body = "var width = canvas.width;\n"
-                       + "var devicePixelRatio = window.devicePixelRatio;\n"
+            + "var devicePixelRatio = window.devicePixelRatio;\n"
             + "return (width/devicePixelRatio);")
     private native int getWidthImpl(Object canvas);
 
