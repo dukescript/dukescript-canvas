@@ -423,16 +423,16 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
 
     @Override
     public ImageData createPixelMap(Object canvas, double x, double y) {
-        return new ImageDataWrapper(createPixelMapImpl(x, y));
+        return new ImageDataWrapper(createPixelMapImpl(canvas, x, y));
     }
 
-    @JavaScriptBody(args = {"x", "y"},
+    @JavaScriptBody(args = {"canvas", "x", "y"},
             body = "return canvas.getContext('2d').createImageData(x,y);")
-    private native Object createPixelMapImpl(double x, double y);
+    private native Object createPixelMapImpl(Object canvas, double x, double y);
 
     @Override
     public ImageData createPixelMap(Object canvas, ImageData imageData) {
-        return new ImageDataWrapper(createPixelMapImpl(imageData.getWidth(), imageData.getHeight()));
+        return new ImageDataWrapper(createPixelMapImpl(canvas, imageData.getWidth(), imageData.getHeight()));
     }
 
     @Override

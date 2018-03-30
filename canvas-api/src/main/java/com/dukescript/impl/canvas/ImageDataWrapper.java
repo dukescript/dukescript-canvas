@@ -51,6 +51,8 @@ class ImageDataWrapper implements ImageData <Object>{
         if (data == null) {
             data = new Data(getDataImpl(imageData));
         }
+        getWidth();
+        getHeight();
         return data;
     }
 
@@ -85,49 +87,49 @@ class ImageDataWrapper implements ImageData <Object>{
 
     @Override
     public int getR(int x, int y) {
-        int idx = (x + y * (int)width) * 4;
+        int idx = (x + ( y * (int)width)) * 4;
         return getData().get(idx);
     }
 
     @Override
     public int getG(int x, int y) {
-        int idx = (x + y * (int)width) * 4;
+        int idx = (x + (y * (int)width)) * 4;
         return getData().get(idx + 1);
     }
 
     @Override
     public int getB(int x, int y) {
-        int idx = (x + y * (int)width) * 4;
+        int idx = (x +( y * (int)width)) * 4;
         return getData().get(idx + 2);
     }
 
     @Override
     public int getA(int x, int y) {
-        int idx = (x + y * (int)width) * 4;
+        int idx = (x + (y * (int)width)) * 4;
         return getData().get(idx + 3);
     }
 
     @Override
     public void setR(int x, int y, int value) {
-        int idx = (x + y * (int)width) * 4;
+        int idx = (x + ( y * (int)width)) * 4;
         getData().set(idx, value);
     }
 
     @Override
     public void setG(int x, int y, int value) {
-        int idx = (x + y * (int)width) * 4;
+        int idx = (x + (y * (int)width)) * 4;
         getData().set(idx + 1, value);
     }
 
     @Override
     public void setB(int x, int y, int value) {
-        int idx = (x + y * (int)width) * 4;
+        int idx = (x + (y * (int)width)) * 4;
         getData().set(idx + 2, value);
     }
 
     @Override
     public void setA(int x, int y, int value) {
-        int idx = (x + y * (int)width) * 4;
+        int idx = (x + (y * (int)width)) * 4;
         getData().set(idx + 3, value);
     }
 
