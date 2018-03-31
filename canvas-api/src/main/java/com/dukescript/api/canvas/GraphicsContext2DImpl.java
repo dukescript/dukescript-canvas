@@ -705,6 +705,20 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
     }
 
     /**
+     * Get a pixel array that you can manipulate, e.g. apply effects /
+     * transparency
+     *
+     * @param x width
+     * @param y height
+     * @param y initial data
+     * @return a PixelMap with  initial data 
+     */
+    @Override
+    public ImageData createPixelMap(double x, double y, int [] data) {
+        return graphicsEnvironmentImpl.createPixelMap(canvas, x, y, data);
+    }
+
+    /**
      * Create a new ImageData object with the same dimensions as the object
      * specified by imageData (this does not copy the image data)
      *

@@ -123,5 +123,12 @@ public interface ImageData <Image> {
      */
     public void setA(int x, int y, int value);
     
+    /**
+     * set all data at once
+     * 
+     * @param data 
+     */
+    public void setData(int[]data);
+    
     public Image getImage();
 }

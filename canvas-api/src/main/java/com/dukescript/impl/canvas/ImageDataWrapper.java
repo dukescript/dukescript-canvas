@@ -51,8 +51,6 @@ class ImageDataWrapper implements ImageData <Object>{
         if (data == null) {
             data = new Data(getDataImpl(imageData));
         }
-        getWidth();
-        getHeight();
         return data;
     }
 
@@ -138,6 +136,11 @@ class ImageDataWrapper implements ImageData <Object>{
         return imageData;
     }
 
+    @Override
+    public void setData(int[] all) {
+       getData().setAll(all);
+    }
+
     private static class Data {
 
         Object data;
@@ -156,6 +159,13 @@ class ImageDataWrapper implements ImageData <Object>{
 
         @JavaScriptBody(args = {"data", "index", "value"}, body = "data[index]=value;")
         private static native void setImpl(Object data, int index, int value);
+  
+        public void setAll(int [] all) {
+            setAllImpl(data, all);
+        }
+
+        @JavaScriptBody(args = {"data", "all"}, body = "data.set(all);")
+        private static native void setAllImpl(Object data, int []all);
 
         @JavaScriptBody(args = {"data", "index"}, body = "return data[index];")
         private static native int getImpl(Object data, int index);

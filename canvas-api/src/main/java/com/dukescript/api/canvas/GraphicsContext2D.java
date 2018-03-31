@@ -630,6 +630,18 @@ public abstract class GraphicsContext2D {
     public abstract ImageData createPixelMap(double x, double y);
 
     /**
+     * Get a pixel array that you can manipulate, e.g. apply effects /
+     * transparency
+     *
+     * @param x width 
+     * @param y height
+     * @param data initial data
+     * @return a PixelMap a new ImageData Objesct with the specified Dimensions
+     *         filled with the initial data 
+     */
+    public abstract ImageData createPixelMap(double x, double y, int[] data);
+
+    /**
      * Create a new ImageData object with the same dimensions as the object
      * specified by imageData (this does not copy the image data)
      *

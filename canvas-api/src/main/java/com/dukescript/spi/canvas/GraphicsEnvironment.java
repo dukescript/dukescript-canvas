@@ -618,6 +618,16 @@ public interface GraphicsEnvironment <Canvas>{
     public ImageData createPixelMap(Canvas canvas, double x, double y);
 
     /**
+     * Get a pixel array that you can manipulate, e.g. apply effects / transparency
+     * @param canvas the native Canvas
+     * @param x width
+     * @param y height
+     * @param all an int [] of initial data
+     * @return a PixelMap
+     */
+    public ImageData createPixelMap(Canvas canvas, double x, double y, int[] all);
+
+    /**
      * Create a new ImageData object with the same dimensions as the 
      * object specified by imageData (this does not copy the image data)
      * @param canvas the native Canvas
