@@ -266,14 +266,17 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
         if (nativeStyle == null) {
             nativeStyle = this.createNativeStyle(canvas, style);
         }
-        setFillStyleImpl(canvas, nativeStyle);
+        if (nativeStyle instanceof PatternWrapper){
+            setFillStyleImpl(canvas, ((PatternWrapper) nativeStyle).object());
+        }
+        else setFillStyleImpl(canvas, nativeStyle);
         return nativeStyle;
     }
 
     protected Object createNativeStyle(Object canvas, Style style) {
 
         if (style instanceof Pattern) {
-            return createPatternWrapper(canvas, ((Pattern) style).getImageResource(), ((Pattern) style).getRepeat()).object();
+            return createPatternWrapper(canvas, ((Pattern) style).getImageResource(), ((Pattern) style).getRepeat());
         } else if (style instanceof Color) {
             return ((Color) style)
                     .getAsString();
