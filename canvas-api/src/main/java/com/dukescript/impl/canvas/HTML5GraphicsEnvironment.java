@@ -273,7 +273,7 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
     protected Object createNativeStyle(Object canvas, Style style) {
 
         if (style instanceof Pattern) {
-            return createPatternWrapper(canvas, ((Pattern) style).getImageResource(), ((Pattern) style).getRepeat());
+            return createPatternWrapper(canvas, ((Pattern) style).getImageResource(), ((Pattern) style).getRepeat()).object();
         } else if (style instanceof Color) {
             return ((Color) style)
                     .getAsString();
@@ -286,7 +286,7 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
             = "gradient.addColorStop(position,color)")
     private static native void addColorStopImpl(Object gradient, double position, String color);
 
-    @JavaScriptBody(wait4js = false, args = {"canvas", "obj"}, body = "canvas.getContext('2d').fillStyle=obj;")
+    @JavaScriptBody(wait4js = false, args = {"canvas", "obj"}, body =  "canvas.getContext('2d').fillStyle=obj;")
     private native void setFillStyleImpl(Object canvas, Object obj);
 
     @Override
@@ -442,8 +442,8 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
 
     @JavaScriptBody(args = {"canvas", "x", "y", "all"},
             body = "var pm = canvas.getContext('2d').createImageData(x,y);"
-                    + "pm.data.set(all);"
-                    + "return pm;")
+            + "pm.data.set(all);"
+            + "return pm;")
     private native Object createPixelMapImpl(Object canvas, double x, double y, int[] all);
 
     @Override
@@ -496,11 +496,12 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
     private native Object createLinearGradientImpl(Object canvas, double x0, double y0, double x1, double y1);
 
     PatternWrapper createPatternWrapper(Object canvas, Image image, String repeat) {
-        return new PatternWrapper(createPatternImpl(canvas, image, repeat));
+        Object nativeImage = createImage(image.getSrc());
+        return new PatternWrapper(createPatternImpl(canvas, nativeImage, repeat));
     }
 
     @JavaScriptBody(args = {"canvas", "image", "repeat"}, body = "return canvas.getContext('2d').createPattern(image, repeat);")
-    private static native Object createPatternImpl(Object canvas, Image image, String repeat);
+    private static native Object createPatternImpl(Object canvas, Object image, String repeat);
 
     RadialGradientWrapper createRadialGradientWrapper(Object canvas, double x0, double y0, double r0, double x1, double y1, double r1) {
         return new RadialGradientWrapper(createRadialGradientImpl(canvas, x0, y0, r0, x1, y1, r1));

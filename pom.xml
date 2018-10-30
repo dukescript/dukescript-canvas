@@ -164,9 +164,9 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>license-maven-plugin</artifactId>
-                        <version>1.7</version>
+                        <version>1.16</version>
                         <configuration>
-                            <inceptionYear>2015</inceptionYear>
+                            <inceptionYear>2016</inceptionYear>
                             <organizationName>Dukehoff GmbH</organizationName>
                             <licenseName>mit</licenseName>
                             <failOnMissingHeader>true</failOnMissingHeader>
