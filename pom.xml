@@ -38,8 +38,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <net.java.html.version>1.3</net.java.html.version>
-        <brwsr.html.version>1.5.1</brwsr.html.version>
-        <bck2brwsr.version>0.30</bck2brwsr.version>
+        <brwsr.html.version>1.0</brwsr.html.version>
+        <bck2brwsr.version>0.19</bck2brwsr.version>
         <jersey.version>2.12</jersey.version>
         <license>COPYING</license>
     </properties>
@@ -64,7 +64,6 @@
         <!--<module>javafx-canvas</module>-->
         <!--        <module>canvas-archetype</module>
         <module>canvas-archetype-test</module>-->
-        <module>events</module>
     </modules>
     
     <distributionManagement>
