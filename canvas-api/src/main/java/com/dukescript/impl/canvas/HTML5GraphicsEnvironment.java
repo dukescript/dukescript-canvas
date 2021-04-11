@@ -254,6 +254,7 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
 
     @JavaScriptBody(wait4js = false, args = {"ctx", "img", "x", "y"}, body
             = "img.onload=function(){\n"
+            //             +       "alert('not cached '+img.src);\n"
             + "  ctx.getContext('2d').drawImage(img,x,y);\n"
             + "};\n"
             + "ctx.getContext('2d').drawImage(img,x,y);\n"
@@ -266,10 +267,11 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
         if (nativeStyle == null) {
             nativeStyle = this.createNativeStyle(canvas, style);
         }
-        if (nativeStyle instanceof PatternWrapper){
+        if (nativeStyle instanceof PatternWrapper) {
             setFillStyleImpl(canvas, ((PatternWrapper) nativeStyle).object());
+        } else {
+            setFillStyleImpl(canvas, nativeStyle);
         }
-        else setFillStyleImpl(canvas, nativeStyle);
         return nativeStyle;
     }
 
@@ -289,7 +291,7 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
             = "gradient.addColorStop(position,color)")
     private static native void addColorStopImpl(Object gradient, double position, String color);
 
-    @JavaScriptBody(wait4js = false, args = {"canvas", "obj"}, body =  "canvas.getContext('2d').fillStyle=obj;")
+    @JavaScriptBody(wait4js = false, args = {"canvas", "obj"}, body = "canvas.getContext('2d').fillStyle=obj;")
     private native void setFillStyleImpl(Object canvas, Object obj);
 
     @Override
@@ -544,7 +546,13 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
     public static native void setWidth_impl(Object canvas, int width);
 
 //    @JavaScriptBody(args = {"src"}, body = "var image = new Image();console.log('image complete '+image.complete);image.src = './'+ src; return image;")
-    @JavaScriptBody(args = {"src"}, body = "var image = new Image();image.src = src; return image;")
+    @JavaScriptBody(args = {"src"}, body = "var id= src.replace(/[^a-zA-Z0-9]/g,'_');\n"
+            + " var image = document.getElementById(id);\n "
+            + "if(image==null) { \n"
+            + "    image = new Image();\n"
+            + "      image.src = src;\n"
+            + "}\n"
+            + "return image;")
     //    @JavaScriptBody(args = {"src"}, body = "return document.getElementById(src);")
     private static native Object createImage(String src);
 
@@ -573,24 +581,47 @@ public class HTML5GraphicsEnvironment implements GraphicsEnvironment<Object> {
     private static native int getHeight(Object canvas, Object nativeImage);
 
     @Override
-    public Object mergeImages(Object Canvas, Image a, Image b, Object cachedA, Object cachedB) {
-        return mergeImages(cachedA, cachedB);
+    public Object mergeImages(Object canvas, Image a, Image b, Object cachedA, Object cachedB) {
+        return mergeImages(canvas, cachedA, cachedB);
     }
 
-    @JavaScriptBody(args = {"img1", "img2"}, body = "var canvas = document.createElement('img');\n"
-            + "var context = canvas.getContext(\"2d\");\n"
+    @JavaScriptBody(args = {"canvas", "img1", "img2"}, body = "\n"
+            + "var context = canvas.getContext('2d');\n"
             + "var width = img1.width;\n"
             + "var height = img1.height;\n"
             + "canvas.width = width;\n"
             + "canvas.height = height;\n"
+            + "context.clearRect( 0, 0,width,height);\n"
             + "context.drawImage(img1, 0, 0);\n"
             + "context.drawImage(img2, 0, 0);\n"
-            + "url = canvas.toDataURL();\n"
+            + "var url = canvas.toDataURL();\n"
             + "var resultImage = document.createElement('img');\n"
             + "resultImage.src=url;\n"
             + "return resultImage;")
-    public static native Object mergeImages(Object img1, Object img2);
+    public static native Object mergeImages(Object canvas, Object img1, Object img2);
 
+    @JavaScriptBody(args = {"canvas", "imgs"}, body = "\n"
+            + "var context = canvas.getContext('2d');\n"
+            + "var width = imgs[0].width;\n"
+            + "var height = imgs[0].height;\n"
+            + "canvas.width = width;\n"
+            + "canvas.height = height;\n"
+            + "context.clearRect( 0, 0,width,height);\n"
+            + "for (i=0; i<imgs.length;i++){"
+            + "context.drawImage(imgs[i], 0, 0);\n"
+            + "};\n"
+            + "var url = canvas.toDataURL();\n"
+            + "var resultImage = document.createElement('img');\n"
+            + "resultImage.src=url;\n"
+            + "return resultImage;")
+    public static native Object mergeImages_impl(Object canvas, Object[] imgs);
+
+        public   Object mergeImages(Object canvas, List<Object> imgs){
+            System.out.println("merging images "+imgs.size());
+            return mergeImages_impl(canvas, imgs.toArray());
+        }
+
+    
 //    @JavaScriptBody(args = {"canvas"}, body = "return canvas.getContext('2d');")
 //    private static native Object getContext(Object canvas);
     @JavaScriptBody(args = {"canvas"}, body = "var height = canvas.height;\n"

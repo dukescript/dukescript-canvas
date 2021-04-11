@@ -32,6 +32,7 @@ import com.dukescript.api.canvas.GraphicsContext2D;
 import com.dukescript.api.canvas.Image;
 import com.dukescript.api.canvas.ImageData;
 import com.dukescript.api.canvas.Style;
+import java.util.List;
 
 /**
  * Provider API for Canvas. Implement this to add support for your platform.
@@ -744,4 +745,17 @@ public interface GraphicsEnvironment <Canvas>{
      * @return the merged native image
      */  
     public Object mergeImages(Canvas canvas, Image a, Image b, Object cachedA, Object cachedB);
+
+    /**
+     * Merges many images drawing one on top of the other and returning the
+     * result.
+     *
+     * @param canvas the native Canvas
+     * @param a the lower Image
+     * @param b the upper Image
+     * @param cachedA the native cached Image, if available, or null.
+     * @param cachedB the native cached Image, if available, or null.
+     * @return the merged native image
+     */  
+    public Object mergeImages(Canvas canvas, List<Object> cached);
 }

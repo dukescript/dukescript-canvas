@@ -1,4 +1,3 @@
-
 package com.dukescript.api.canvas;
 
 /*
@@ -26,14 +25,16 @@ package com.dukescript.api.canvas;
  * THE SOFTWARE.
  * #L%
  */
-
 import com.dukescript.api.canvas.Style.Color;
 import com.dukescript.api.canvas.Style.LinearGradient;
 import com.dukescript.api.canvas.Style.Pattern;
 import com.dukescript.api.canvas.Style.RadialGradient;
 import com.dukescript.api.canvas.Style.Stop;
 import com.dukescript.spi.canvas.GraphicsEnvironment;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import net.java.html.js.JavaScriptBody;
 
 final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
 
@@ -407,10 +408,37 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
             drawImage(b, 0, 0);
         }
         Object nativeImage = graphicsEnvironmentImpl.mergeImages(canvas, a, b, a.getCached(), b.getCached());
-        Image merged = Image.create("should add real path here");
+        Image merged = Image.create(getImageSource(nativeImage));
         merged.cache(nativeImage);
         return merged;
     }
+
+    @Override
+    public Image merge(Image a, List<Image> b) {
+        System.out.println("merge images "+b.size());
+        List<Object> cached = new ArrayList<Object>();
+        if (a.getCached() == null) {
+            drawImage(a, 0, 0);
+        }
+            cached.add(a.getCached());
+        for (Image image : b) {
+            if (image.getCached() == null) {
+                drawImage(image, 0, 0);
+            }
+                cached.add(image.getCached());
+        }
+        Object nativeImage = graphicsEnvironmentImpl.mergeImages(canvas, cached);
+        Image merged = Image.create(getImageSource(nativeImage));
+        merged.cache(nativeImage);
+        return merged;
+    }
+
+    private String getImageSource(Object nativeImage) {
+        return getImageSource_impl(nativeImage);
+    }
+
+    @JavaScriptBody(args = {"nativeImage"}, body = "return nativeImage.src;")
+    private static native String getImageSource_impl(Object nativeImage);
 
 //    public void setShadowColor(String color) {
 //        graphicsEnvironmentImpl.setShadowColor(color);
@@ -711,10 +739,10 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
      * @param x width
      * @param y height
      * @param y initial data
-     * @return a PixelMap with  initial data 
+     * @return a PixelMap with initial data
      */
     @Override
-    public ImageData createPixelMap(double x, double y, int [] data) {
+    public ImageData createPixelMap(double x, double y, int[] data) {
         return graphicsEnvironmentImpl.createPixelMap(canvas, x, y, data);
     }
 
@@ -773,7 +801,6 @@ final class GraphicsContext2DImpl<Canvas> extends GraphicsContext2D {
 //    public void drawPixelMap(ImageData pixelMap, double x, double y, double dirtyx, double dirtyy, double dirtywidth, double dirtyheight) {
 //        graphicsEnvironmentImpl.putPixelMap(canvas, pixelMap, x, y, dirtyx, dirtyy, dirtywidth, dirtyheight);
 //    }
-
     /**
      * Sets the global alpha of the current state.
      *

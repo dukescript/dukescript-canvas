@@ -36,6 +36,7 @@ import com.dukescript.impl.canvas.CnvsAccssr;
 import com.dukescript.impl.canvas.HTML5GraphicsEnvironment;
 import java.util.List;
 import java.util.ServiceLoader;
+import java.util.Set;
 
 /**
  * A 2D Graphics Context similar to HTML5 or JavaFX GraphicsContext. Use this to
@@ -404,6 +405,16 @@ public abstract class GraphicsContext2D {
      * @return the merged Image
      */
     public abstract Image merge(Image a, Image b);
+
+    /**
+     * Merges  images by drawing  all stacked and returning the
+     * result.
+     *
+     * @param a the lower Image
+     * @param b the upper Image
+     * @return the merged Image
+     */
+    public abstract Image merge(Image a, List<Image> b);
 
 //    public void setShadowColor(String color) {
 //        graphicsEnvironmentImpl.setShadowColor(color);
